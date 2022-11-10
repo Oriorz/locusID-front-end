@@ -1,11 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rye&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
 
 a {
   color: black !important;
 }
 
 .brand-logo, h2 {
-  font-family: 'Grand Hotel', cursive;
+  /*font-family: 'Grand Hotel', cursive;*/
+  /* font-family: 'Rye', cursive; */
+  font-family: 'Poiret One', cursive;
+}
+
+.brand-logo, left {
+  margin-left:15px;
 }
 
 .mycard {
