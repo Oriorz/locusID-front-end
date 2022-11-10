@@ -49,7 +49,7 @@ const NavBar = () => {
       .addURL('http://www.jeroendesloovere.be')
 
     console.log(myVCard.toString())
-    
+
     /* var link = document.createElement('a');
     link.setAttribute('download', 'Desloovere.vcf' );
     link.href = makeTextFile(
@@ -63,12 +63,15 @@ const NavBar = () => {
       document.body.removeChild(link);
     }); */
 
-    const url = window.URL.createObjectURL(new Blob([myVCard]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', 'blob.vcf');
-        document.body.appendChild(link);
-        link.click();
+    /* const url = window.URL.createObjectURL(new Blob([myVCard]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('href', 'blob.vcf');
+    document.body.appendChild(link);
+    link.click(); */
+
+    var data = "BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3ADoe%3BJohn%0AFN%3AJohn%20Doe%0ATITLE%3A08002221111%0AORG%3AStackflowover%0AEMAIL%3BTYPE%3DINTERNET%3Ajohndoe%40gmail.com%0AEND%3AVCARD";
+    window.open("data:text/x-vcard;urlencoded," + data);
 
 
     myVCard.saveToFile('./Desloovere.vcf')
