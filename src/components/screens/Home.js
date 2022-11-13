@@ -104,63 +104,97 @@ const Home = () => {
         }).catch(err=>console.log(err))
     }
 
+    const getVCard = () => {
+      var data = "BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3ADoe%3BJohn%0AFN%3AJohn%20Doe%0ATITLE%3A08002221111%0AORG%3AStackflowover%0AEMAIL%3BTYPE%3DINTERNET%3Ajohndoe%40gmail.com%0AEND%3AVCARD";
+      window.open("data:text/x-vcard;urlencoded," + data);
+    }
     return (
         <div className='home'>
-            {
-                data && data.map(item => {
-                    return (
-                        <div className='card home-card' key={item._id}>
-                            <h5 style={{padding:"5px"}}><Link to={item.postedBy._id !== state._id?"/profile/"+item.postedBy._id : "/profile/"}>{item.postedBy.name} </Link>
-                            {item.postedBy._id == state._id 
-                            &&  <i className="material-icons" style={{ float:"right" }}
-                            onClick={()=>deletePost(item._id)}
-                            >delete</i>
-                            }
-                            
-                            </h5>
-                            <div className='card-image'>
-                                <img src={item.photo} />
-                            </div>
-                            <div className='card-content'>
-                                <i className="material-icons" style={{ color: "red" }}>favorite</i>
-                                {item.likes.includes(state._id)
-                                    ? <i className="material-icons"
-                                        onClick={() => {
-                                            unlikePost(item._id)
-                                        }}>thumb_down</i>
-                                    :
-                                    <i className="material-icons"
-                                        onClick={() => {
-                                            likePost(item._id)
-                                        }}
-                                    >thumb_up</i>
-                                }
+            <div style={{ maxWidth: "550px", margin: "0px auto" }}>
+          <div style={{
+            display: "flex",
+            justifyContent: "space-around",
+            margin: "18px 0px",
+            borderBottom: "1px solid grey"
+          }}>
+            <div>
+              <img style={{ width: "160px", height: "160px", borderRadius: "80px" }}
+                src="../images/gamiauto.png"
+              />
+            </div>
+            <div>
+              <h4>GamiAuto</h4>
+              <h5>contact@gamiauto.art</h5>
+              
+            </div>
+            
+          </div>
+          <div key="getVCard">
+              <button
+                className="btn waves-effect waves-light green darken-3"
+                onClick={() => getVCard()}
+              >
+                Get Contact
+              </button>
+            </div>
+          <div>
 
-                                <h6>{item.likes.length} likes</h6>
-                                <h6>{item.title}</h6>
-                                <p>{item.body}</p>
-                                {
-                                    item.comments.map(record => {
-                                        return (
-                                            <h6 key={record._id}>
-                                                <span style={{ fontWeight: "500" }}>
-                                                    {record.postedBy.name}
-                                                </span> {record.text}
-                                            </h6>
-                                        )
-                                    })
-                                }
-                                <form onSubmit={(e) => {
-                                    e.preventDefault()
-                                    makeComment(e.target[0].value, item._id)
-                                }}>
-                                    <input type="text" placeholder='add a comment' />
-                                </form>
-                            </div>
-                        </div>
-                    )
-                })
-            }
+          </div>
+          <div className='social'>
+            <ul className="collection">
+              <li className="collection-item avatar">
+                <img key="facebook-input" className="circle" src="../images/facebook.png" alt="Facebook" />
+                <span className="title">Facebook</span>
+                <p>@GamiAuto
+                  <br />
+                </p>
+              </li>
+              <li className="collection-item avatar">
+                <img key="whatsapp-input" className="circle" src="../images/whatsapp.png" alt="Facebook" />
+                <span className="title">Whastapp</span>
+                <p>+601111234567
+                  <br />
+                </p>
+              </li>
+              <li className="collection-item avatar">
+                <img key="wechat-input" className="circle" src="../images/wechat.png" alt="Facebook" />
+                <span className="title">Wechat</span>
+                <p>+601111234567
+                  <br />
+                </p>
+              </li>
+              <li className="collection-item avatar">
+                <img key="instagram-input" className="circle" src="../images/instagram.png" alt="Facebook" />
+                <span className="title">Instagram</span>
+                <p>@GamiAuto
+                  <br />
+                </p>
+              </li>
+              
+              <li className="collection-item avatar">
+                <img key="tng-input" className="circle" src="../images/tng.png" alt="Facebook" />
+                <span className="title">Touch N Go</span>
+                <p>9845-7423-524
+                  <br />
+                </p>
+              </li>
+              <li className="collection-item avatar">
+                <img key="steam-input" className="circle" src="../images/steam.png" alt="Facebook" />
+                <span className="title">Steam</span>
+                <p>@oriorz
+                  <br />
+                </p>
+              </li>
+              <li className="collection-item avatar">
+                <img key="steam-input" className="circle" src="../images/pokemon.png" alt="Facebook" />
+                <span className="title">Pokemon</span>
+                <p>5096-2990-8559
+                  <br />
+                </p>
+              </li>
+            </ul>
+          </div>
+        </div>
         </div>
     )
 }

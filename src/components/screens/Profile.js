@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { UserContext } from '../../App'
+import { socials, single } from '../namelist'
 
 const Profile = () => {
   const [mypics, setMypics] = useState([])
@@ -74,11 +75,11 @@ const Profile = () => {
           <div>
             <h4>{state ? state.name : "loading"}</h4>
             <h5>{state ? state.email : "loading"}</h5>
-            <div style={{ display: "flex", justifyContent: "space-between", width: "108%" }}>
+            {/* <div style={{ display: "flex", justifyContent: "space-between", width: "108%" }}>
               <h6>{mypics.length} posts</h6>
               <h6>{state ? state.followers.length : "0"} followers</h6>
               <h6>{state ? state.following.length : "0"} following</h6>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="file-field input-field">
@@ -94,14 +95,23 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      <div className='gallery'>
-        {
-          mypics && mypics.map(item => {
-            return (
-              <img key={item._id} className='item' src={item.photo} alt={item.title} />
-            )
-          })
-        }</div>
+      <div className='social'>
+        <ul class="collection">
+          <li class="collection-item avatar">
+            <img key="facebook-input" class="circle" src="./images/whatsapp.jpg" alt="Facebook" />
+            <span class="title">Facebook</span>
+            <p>First Line 
+              <br/>
+              Second Line
+            </p>
+
+          </li>
+          <li class="collection-item avatar">
+            <img key="whatsapp-input" class="circle" src="./images/whatsapp.jpg" alt="Facebook" />
+            <span class="title">Whastapp</span>
+          </li>
+        </ul>
+      </div>
     </div>
   )
 }

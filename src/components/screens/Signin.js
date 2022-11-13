@@ -12,7 +12,8 @@ const Signin = () => {
         if (!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)) {
             return M.toast({ html: "invalid email", classes: "red darken-3" })
         }
-        fetch("/signin", {
+        //fetch("/signin", {
+        fetch("/api/signin", {
             method: "post",
             headers: {
                 "Content-type": "application/json"

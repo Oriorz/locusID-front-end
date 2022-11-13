@@ -23,7 +23,7 @@ const Routing = () => {
       //navigate('/')
     }
     else{
-      navigate('/signin')
+      //navigate('/signin')
     }
   },[])
   return (

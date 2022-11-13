@@ -1,0 +1,60 @@
+module.exports = {
+  socials:[
+    "whatsapp",
+    "facebook",
+    "telegram",
+    "email",
+    "linkedin",
+    "line",
+    "skype",
+    "twitter",
+    "wechat",
+    "instagram",
+    "foursquare",
+    "xiaohongshu",
+    "reddit"
+  ],
+  messaging:[
+    "whatsapp",
+    "wechat",
+    "line",
+    "telegram",
+  ],
+  single:[
+    {
+      id:"whatsapp",
+      title:"Whatsapp Messenger",
+      src:"./images/whatsapp.jpg"
+    },
+    {
+      id:"whatsapp",
+      title:"Whatsapp Messenger",
+      src:"./images/whatsapp.jpg"
+    }
+  ],
+  sales:[
+    "grab",
+    "foodpanda",
+    "lazada",
+    "shopee",
+    "taobao",
+    "carousell",
+    "propertyguru",
+    "iproperty"
+  ],
+  games:[
+    "pokemon",
+    "lol",
+    "mlbb",
+    "nintendoswitch",
+    "steam"
+  ],
+  ewallet:[
+    "tng",
+    "grab",
+    "boost",
+    "maybank2u",
+    "bankacc"
+  ]
+
+}
