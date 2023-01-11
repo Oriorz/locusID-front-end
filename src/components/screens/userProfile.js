@@ -175,7 +175,7 @@ const UserProfile = () => {
 
     var greeting = vCard.export()
     greeting = stringToAscii(greeting)
-    M.toast({ html: greeting })
+    //M.toast({ html: greeting })
     window.open("data:text/x-vcard;urlencoded," + greeting);
 
     //var data = "BEGIN%3AVCARD%aVERSION%3A3.0%0AN%3ADoe%3BJohn%0AFN%3AJohn%20Doe%0ATITLE%3A08002221111%0AORG%3AStackflowover%0AEMAIL%3BTYPE%3DINTERNET%3Ajohndoe%40gmail.com%0AEND%3AVCARD";
