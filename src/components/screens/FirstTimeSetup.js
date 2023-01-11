@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import M from 'materialize-css'
-const Signup = () => {
+const FirstTimeSetup = () => {
   const navigate = useNavigate()
+  const { token } = useParams()
   const [name, setName] = useState("")
   const [password, setPassword] = useState("")
-  const [email, setEmail] = useState("")
   const [image, setImage] = useState("")
   const [url, setUrl] = useState(undefined)
-  useEffect(()=>{
-    if(url){
+  useEffect(() => {
+    if (url) {
       UploadFields()
     }
-  },[url])
-  
+  }, [url])
+
   const PostData = () => {
-    if(image){
+    if (image) {
       UploadPic()
     }
     else {
@@ -29,21 +29,21 @@ const Signup = () => {
     data.append("upload_preset", "insta-clone")
     data.append("cloud_name", "xiaomiao")
     fetch("https://api.cloudinary.com/v1_1/xiaomiao/image/upload", {
-        method: "post",
-        body: data
+      method: "post",
+      body: data
     })
-        .then(res => res.json())
-        .then(data => {
-            setUrl(data.url)
-        })
-        .catch(err => console.log(err))
+      .then(res => res.json())
+      .then(data => {
+        setUrl(data.url)
+      })
+      .catch(err => console.log(err))
   }
 
   const UploadFields = () => {
-    if (!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)) {
+    /* if (!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)) {
       return M.toast({ html: "invalid email", classes: "red darken-3" })
-    }
-    fetch("/signup", {
+    } */
+    fetch("/api/signup", {
       method: "post",
       headers: {
         "Content-type": "application/json"
@@ -51,8 +51,8 @@ const Signup = () => {
       body: JSON.stringify({
         name,
         password,
-        email,
-        pic:url
+        //email,
+        pic: url
       })
     }).then(res => res.json())
       .then(data => {
@@ -68,52 +68,79 @@ const Signup = () => {
 
   }
 
+  const showData = () => {
+    //M.toast({html:"1"})
+    console.log("pw is ", token)
+  }
+
+  const reflectReq = () => {
+    fetch(`/api/new-account`, {
+      method: "post",
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify({
+        token,
+        name,
+        password
+      })
+    }).then(res => res.json())
+      .then(result => console.log(result))
+  }
+
   return (
     <div className='mycard'>
       <div className="card auth-card input-field">
-        <h2>iTap</h2>
+        <h2>Activate Account</h2>
         <input
           type="text"
           placeholder='name'
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
-        <input
+        {/* <input
           type="text"
           placeholder='email'
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-        />
+        /> */}
         <input
           type="password"
           placeholder='password'
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <div className="file-field input-field">
-          <div className="btn blue darken-1">
-            <span>Upload pic</span>
-            <input
-              type="file"
-              onChange={(e) => setImage(e.target.files[0])}
-            />
-          </div>
-          <div className="file-path-wrapper ">
-            <input className="file-path validate" type="text" placeholder="Upload one or more files" />
-          </div>
-        </div>
-        <button className="btn waves-effect waves-light blue darken-2"
+        {/* <input
+          type="password"
+          placeholder='password'
+          value={repeatPassword}
+          onChange={(e) => setRepeatPassword(e.target.value)}
+        /> */}
+
+        {/* <button className="btn waves-effect waves-light blue darken-2"
           onClick={() => PostData()}
         >
-          Signup
-        </button>
+          SET
+        </button> */}
+        <div>
 
-        <h5>
-          <Link to="/signin">Already have an account?</Link>
-        </h5>
+        </div>
+        {/* <button className="btn waves-effect waves-light blue darken-2"
+          onClick={() => showData()}
+        >
+          showdata
+        </button> */}
+        <div>
+
+        </div>
+        <button className="btn waves-effect waves-light blue darken-2"
+          onClick={() => reflectReq()}
+        >
+          Activate Account
+        </button>
       </div>
     </div>
   )
 }
 
-export default Signup
+export default FirstTimeSetup

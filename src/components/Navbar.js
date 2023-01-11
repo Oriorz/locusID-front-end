@@ -39,7 +39,7 @@ const NavBar = () => {
       <div className="nav-wrapper white" >
         <Link to={state ? "/" : "/"} className="brand-logo left"
         //style={{ margin: "5px" }}
-        >LocusID</Link>
+        >iTap</Link>
         <ul id="nav-mobile" className="right">
           {renderList()}
         </ul>

@@ -30,10 +30,10 @@ const UserProfile = () => {
 
   useEffect(() => {
     //this use effect is to get user info 
-    fetch(`/api/user/${userid}`, {
+    fetch(`/user/${userid}`, {
       method: "get",
       headers: {
-        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("jwt")
       }
     }).then(res => res.json())
       .then(result => {
@@ -265,7 +265,57 @@ const UserProfile = () => {
     }
   }
 
-  /* const followUser = () => {
+  const getVCard2 = () => {
+    var BEGINVCARD = "BEGIN%3AVCARD%0AVERSION%3A3.0"
+    //var data = "BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3ADoe%3BJohn%0AFN%3AJohn%20Doe%0ATITLE%3A08002221111%0AORG%3AStackflowover%0AEMAIL%3BTYPE%3DINTERNET%3Ajohndoe%40gmail.com%0AEND%3AVCARD";
+    //window.open("data:text/x-vcard;urlencoded," + data);
+
+    /* var vCardsJS = require('vcards-js');
+    var vCard = vCardsJS(); */
+    /* vCard.firstName = 'Eric';
+    vCard.middleName = 'J';
+    vCard.lastName = 'Nesser';
+    vCard.organization = 'ACME Corporation';
+    vCard.workPhone = '312-555-1212';
+    vCard.birthday = new Date(1985, 0, 1);
+    vCard.title = 'Software Developer';
+    vCard.url = 'https://github.com/enesser';
+    vCard.note = 'Notes on Eric'; */
+    //vCard.photo.attachFromUrl('https://avatars2.githubusercontent.com/u/5659221?v=3&s=460', 'JPEG');
+
+    const VCard = require('vcard-creator').default
+
+    // Define a new vCard
+    const myVCard = new VCard()
+
+    const lastname = userProfile.user.name
+    //const lastname = "miao"
+    //console.log(userProfile.user.name)
+    const firstname = 'Jeroen'
+    const additional = ''
+    const prefix = ''
+    const suffix = ''
+
+    myVCard
+      // Add personal data
+      .addName(lastname, firstname, additional, prefix, suffix)
+
+    // Add work data
+    /* .addCompany('Siesqo')
+    .addJobtitle('Web Developer')
+    .addRole('Data Protection Officer')
+    .addEmail('info@jeroendesloovere.be')
+    .addPhoneNumber(1234121212, 'PREF;WORK')
+    .addPhoneNumber(123456789, 'WORK')
+    .addAddress(null, null, 'street', 'worktown', null, 'workpostcode', 'Belgium')
+    .addURL('http://www.jeroendesloovere.be') */
+
+    console.log("theVcard is ", myVCard.toString())
+    //window.open("data:text/x-vcard;urlencoded," + myVCard.toString());
+    M.toast({ html: myVCard.toString() })
+  }
+
+  const followUser = () => {
     fetch('/follow', {
       method: "put",
       headers: {
@@ -322,21 +372,29 @@ const UserProfile = () => {
         })
         setShowFollow(true)
       })
-  } */
+  }
 
   const loadCollapsible = () => {
 
     document.addEventListener('DOMContentLoaded', (event) => {
       console.log('loadCollapsible loaded');
     });
+    /* document.addEventListener('DOMContentLoaded', function () {
+      var elems = document.querySelectorAll('.collapsible');
+      var instance = M.Collapsible.init(elems, {
+        accordion: true
+      });
+      instance.open();
+      console.log("loadCollapsible loaded")
+    }) */
   }
 
-  /*   const loadModal = () => {
-      document.addEventListener('DOMContentLoaded', function () {
-        var elems = document.querySelectorAll('.modal');
-        var instances = M.Modal.init(elems);
-      });
-    } */
+  const loadModal = () => {
+    document.addEventListener('DOMContentLoaded', function () {
+      var elems = document.querySelectorAll('.modal');
+      var instances = M.Modal.init(elems);
+    });
+  }
 
   const GoRegistration = (event) => {
     event.preventDefault()
@@ -344,7 +402,7 @@ const UserProfile = () => {
       return M.toast({ html: "invalid email", classes: "red darken-3" })
     }
     M.toast({ html: `user profile id is ${userProfile.user._id} ${userid}` })
-    fetch("/api/bind-email", {
+    fetch("/bind-email", {
       method: "post",
       headers: {
         "Content-type": "application/json"
@@ -359,26 +417,8 @@ const UserProfile = () => {
     //navigate(`/setup/${userid}/${password}`)
   }
 
-  const testRoute = (text) => {
-    navigator.clipboard.writeText(text);
-  }
-
-  const copyLink = async (text) => {
-    //const link = userProfile.user[text]
-    //console.log("link is", link)
-    //window.clipboardData.setData(link);
-  
-    const clipboardy = require("clipboardy");
-
-    // Copy
-    clipboardy.writeSync("something");
-
-
-  }
-
   return (
     <>
-      {/* <button onClick={testRoute("miao")}>api</button> */}
       {userProfile ?
         userProfile.user.isInitialized == true ?
           <div style={{ maxWidth: "550px", margin: "0px auto" }}>
@@ -399,14 +439,6 @@ const UserProfile = () => {
                 <h4>{userProfile.user.name}</h4>
                 <h5>{userProfile.user.email}</h5>
 
-                <div key="getVCard">
-                  <button
-                    className="btn waves-effect waves-light green darken-3"
-                    onClick={() => getVCard()}
-                  >
-                    Get Contact
-                  </button>
-                </div>
               </div>
 
               {/* <a className="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
@@ -423,16 +455,24 @@ const UserProfile = () => {
             </div>
             {userProfile.user.notes ?
               <>
-                <div style={{ textAlign: "center" }}>About Me:</div>
-                <div style={{ textAlign: "center" }}>{userProfile.user.notes}</div>
+                <div>Note:</div>
+                <div>{userProfile.user.notes}</div>
               </>
               :
               <div>b</div>
             }
+            <div key="getVCard">
+              <button
+                className="btn waves-effect waves-light green darken-3"
+                onClick={() => getVCard()}
+              >
+                Get Contact
+              </button>
+            </div>
             <div>
               <div>
                 {qr ?
-                  <div style={{ textAlign: "center" }}>
+                  <div>
                     <div> <img src={qr} /> </div>
                   </div>
                   :
@@ -441,9 +481,6 @@ const UserProfile = () => {
               </div>
 
             </div>
-            <div style={{ borderBottom: "3px solid grey" }}></div>
-            <br></br>
-            <br></br>
             <div className='social'>
               <div className="collection-wrapper" >
                 {
@@ -453,15 +490,10 @@ const UserProfile = () => {
                         {
                           //userProfile?
                           userProfile.user[item.id] ?
-                            <div className="collection-item" key={item.id + "_key"}>
-                              <img
-                                key={item.id + "_img"}
-                                className="circle modal-trigger"
-                                href={"#modal" + item.id}
-                                src={item.src}
-                                alt={item.id}
 
-                              />
+                            //console.log("asdf", userProfile.user[item.id])
+                            <div className="collection-item" key={item.id + "_key"}>
+                              <img key={item.id + "_img"} className="circle modal-trigger" href={"#modal" + item.id}  src={item.src} alt={item.id} />
 
                               {/* <a className="waves-effect waves-light btn modal-trigger" href={"#modal" + item.id} style={{ textAlign: "center" }}>
                                 {item.id}
@@ -474,10 +506,7 @@ const UserProfile = () => {
                                     <a target="_blank" href={item.link + userProfile.user[item.id]}>
                                       {item.link}{userProfile.user[item.id]}
                                     </a>
-                                    <div></div>
-                                    <button onclick={() => {
-                                      copyLink(item.id)
-                                    }}> COPY </button>
+
                                     <br></br>
                                     <br></br>
                                     <br></br>
@@ -489,15 +518,8 @@ const UserProfile = () => {
                                   <a href="#!" className="modal-close waves-effect waves-green btn-flat">Agree</a>
                                 </div> */}
                               </div>
-                              {/* <div>
-                                  
-                                      <br></br>
-                                      <br></br>
-                                      <br></br>
-                                      <br></br>
-                                </div> */}
-                            </div>
 
+                            </div>
                             :
                             ""
                         }
@@ -506,26 +528,42 @@ const UserProfile = () => {
                   })
                 }
               </div>
+              <ul className="collection">
+                {
+                  socials.map((item, index) => {
+                    return (
+                      <>
+                        {
+                          userProfile.user[item.id] ?
+                            <li className="collection-item avatar" key={item.id + "_key"}>
+                              <img key={item.id + "_img"} className="circle" src={item.src} alt={item.id} />
+                              <span className="title">{item.title}</span>
+                              <p>
+                                <a target="_blank" href={item.link + userProfile.user[item.id]}>{item.link}{userProfile.user[item.id]}</a>
+                              </p>
+                              <a className="waves-effect waves-light btn modal-trigger" href={"#modal" + item.id}>{item.id}</a>
+                              <div id={"modal" + item.id} className="modal bottom-sheet">
+                                <div className="modal-content">
+                                  <h4>{item.id}</h4>
+                                  <p><a target="_blank" href={item.link + userProfile.user[item.id]}>{item.link}{userProfile.user[item.id]}</a>
+                                  </p>
+                                </div>
+                                <div className="modal-footer">
+                                  <a href="#!" className="modal-close waves-effect waves-green btn-flat">Agree</a>
+                                </div>
+                              </div>
 
+                            </li>
+                            :
+                            ""
+                        }
+                      </>
+                    )
+                  })
+                }
+              </ul>
             </div>
-            <br></br>
-            <div style={{ borderBottom: "3px solid grey" }}></div>
-            <br></br>
-            <br></br>
-            <>
-              {/* https://youtu.be/OImBxPnTLZw?t=185 */}
-              {/* <iframe style={{ textAlign: "center" }} width="420" height="315" src="https://www.youtube.com/embed/gCZ3y6mQpW0&list=PL4cUxeGkcC9gGrbtvASEZSlFEYBnPkmff" title="description"></iframe>
-               */}<br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-            </>
+
             {loadCollapsible()}
           </div>
           :

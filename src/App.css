@@ -64,3 +64,39 @@ a {
 .material-icons:hover {
   cursor:pointer;
 }
+
+.collection-wrapper {
+  max-width: 550px;
+  /* max-height: 1000px; */
+  display:  grid;
+  /* grid-template-rows:repeat(1); */
+  grid-template-columns: repeat(4, 1fr);
+  /* grid-template-rows: repeat(4, 100px); */
+  /* grid-template-areas: "a b c d";
+  grid-auto-columns: 100px 100px 100px 100px; */
+  gap: 10px;
+  /* border: 2px solid gold; */
+  /* background-color: rgba(255, 0, 255, 0.25); */
+}
+
+/* .collection-item{
+  width: 100%;
+} */
+
+.circle{
+  width: 80%;
+  height: 100%;
+  /* text-align: center; */
+  /* background-color: rgba(255, 0, 255, 0.25); */
+}
+
+body {
+  overflow: auto !important;
+}
+
+.collection-item{
+  
+  /* border: 2px solid gold; */
+  text-align: center;
+  /* background-color: rgba(255, 0, 255, 0.25); */
+}

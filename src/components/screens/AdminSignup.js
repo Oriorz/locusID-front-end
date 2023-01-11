@@ -1,26 +1,48 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import M from 'materialize-css'
-const Signup = () => {
+import { add } from 'lodash'
+
+const AdminSignup = () => {
   const navigate = useNavigate()
   const [name, setName] = useState("")
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
   const [image, setImage] = useState("")
   const [url, setUrl] = useState(undefined)
-  useEffect(()=>{
+  /* useEffect(()=>{
     if(url){
       UploadFields()
     }
-  },[url])
+  },[url]) */
+
   
   const PostData = () => {
-    if(image){
-      UploadPic()
-    }
-    else {
-      UploadFields()
-    }
+    var randomstring = Math.random().toString(36).substring(2, 12);
+    var randomstring1 = Math.random().toString(36).substring(2, 12);
+    var randomstring2 = Math.random().toString(36).substring(2, 12);
+    console.log("randomstring = ", randomstring)
+    console.log("randomstring1 = ", randomstring1)
+    console.log("randomstring2 = ", randomstring2)
+    fetch("/adminsignup", {
+      method: "post",
+      headers: {
+        "Content-type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("jwt")
+      },
+      body: JSON.stringify({
+        name: randomstring,
+        password: randomstring1,
+        email: randomstring2,
+        pic: url,
+        isInitialized: false
+      })
+    }).then(res => res.json())
+      .then(data => {
+        console.log(data)
+      })
+      .catch(err => console.log(err))
+
   }
 
   const UploadPic = () => {
@@ -29,14 +51,14 @@ const Signup = () => {
     data.append("upload_preset", "insta-clone")
     data.append("cloud_name", "xiaomiao")
     fetch("https://api.cloudinary.com/v1_1/xiaomiao/image/upload", {
-        method: "post",
-        body: data
+      method: "post",
+      body: data
     })
-        .then(res => res.json())
-        .then(data => {
-            setUrl(data.url)
-        })
-        .catch(err => console.log(err))
+      .then(res => res.json())
+      .then(data => {
+        setUrl(data.url)
+      })
+      .catch(err => console.log(err))
   }
 
   const UploadFields = () => {
@@ -52,7 +74,7 @@ const Signup = () => {
         name,
         password,
         email,
-        pic:url
+        pic: url
       })
     }).then(res => res.json())
       .then(data => {
@@ -71,8 +93,8 @@ const Signup = () => {
   return (
     <div className='mycard'>
       <div className="card auth-card input-field">
-        <h2>iTap</h2>
-        <input
+        <h2>iTap Admin</h2>
+        {/* <input
           type="text"
           placeholder='name'
           value={name}
@@ -89,31 +111,26 @@ const Signup = () => {
           placeholder='password'
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-        />
-        <div className="file-field input-field">
-          <div className="btn blue darken-1">
-            <span>Upload pic</span>
-            <input
-              type="file"
-              onChange={(e) => setImage(e.target.files[0])}
-            />
-          </div>
-          <div className="file-path-wrapper ">
-            <input className="file-path validate" type="text" placeholder="Upload one or more files" />
-          </div>
-        </div>
+        /> */}
         <button className="btn waves-effect waves-light blue darken-2"
           onClick={() => PostData()}
         >
-          Signup
+          Create New User
         </button>
+        <div>
+          <button className="btn waves-effect waves-light blue darken-2"
+            onClick={() => PostData()}
+          >
+            add json
+          </button>
+        </div>
 
-        <h5>
+        {/* <h5>
           <Link to="/signin">Already have an account?</Link>
-        </h5>
+        </h5> */}
       </div>
     </div>
   )
 }
 
-export default Signup
+export default AdminSignup
