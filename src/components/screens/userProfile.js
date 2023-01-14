@@ -140,27 +140,29 @@ const UserProfile = () => {
     if (userProfile.user.title) {
       vCard.addTitle(userProfile.user.title)
     }
-    if (userProfile.user.role) {
+    /* if (userProfile.user.role) {
       vCard.addRole(userProfile.user.role)
-    }
+    } */
     if (userProfile.user.organization) {
       vCard.addOrg(userProfile.user.organization)
     }
 
-    //vCard.addNick("Nick Fury")
-    //vCard.addTitle("Crash Test Dummy")
-    //vCard.addRole("CEO cum CFO")
-    //vCard.addOrg("Furry Corporation")
-    vCard.addUrl("https://url.com")
-    vCard.addUrl("https://url.work.com", "WORK")
 
-    vCard.addAddress("49, jalan jaya 11, Rini Height, Taman Mutiara Rini, 81300 Skudai, Johor, Malaysia", "s")
-
-
-    //vCard.addNote(notes)
-    if (userProfile.user.notes) {
-      vCard.addNote(userProfile.user.notes)
+    if(userProfile.user.url) {
+      vCard.addUrl(userProfile.user.url, "home")
     }
+
+    if(userProfile.user.workurl) {
+      vCard.addUrl(userProfile.user.workurl, "work")
+    }
+
+    if(userProfile.user.address) {
+      vCard.addAddress(userProfile.user.address, "home")
+    }
+    if(userProfile.user.workaddress) {
+      vCard.addAddress(userProfile.user.address, "work")
+    }
+    
     socials.map((item) => {
       if (userProfile.user[item.id]) {
         if (item.id === "wechat") {
@@ -169,6 +171,11 @@ const UserProfile = () => {
           vCard.addSocial(item.shortlink + userProfile.user[item.id], item.vcard)
         }
       }
+
+      //vCard.addNote(notes)
+      /* if (userProfile.user.notes) {
+        vCard.addNote(userProfile.user.notes)
+      } */
     })
 
     var greeting = vCard.export()
@@ -238,7 +245,7 @@ const UserProfile = () => {
       this.vcard += "\n" + "ORG;CHARSET=UTF-8:" + text
     }
 
-    this.addNote = function (text,) {
+    this.addNote = function (text) {
       this.vcard += "\n" + "NOTE;CHARSET=UTF-8:" + text
     }
 
@@ -365,7 +372,7 @@ const UserProfile = () => {
     //const link = userProfile.user[text]
     //console.log("link is", link)
     //window.clipboardData.setData(link);
-  
+
     const clipboardy = require("clipboardy");
 
     // Copy
@@ -532,7 +539,7 @@ const UserProfile = () => {
 
               <div className="card auth-card input-field">
 
-                <h2>Email Binding</h2>
+                <h2>Email Activation</h2>
 
                 <div className="row">
                   <form className="col s12">

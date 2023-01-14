@@ -223,13 +223,13 @@ module.exports = {
       example: "...",
       vcard: "Title"
     },
-    {
+    /* {
       id: "role",
       title: "Role (Optional)",
       src: "../images/title.jpg",
       example: "...",
       vcard: "Role"
-    },
+    }, */
     {
       id: "organization",
       title: "Organization (Optional)",
