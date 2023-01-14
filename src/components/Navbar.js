@@ -29,8 +29,7 @@ const NavBar = () => {
     } else {
       return [
 
-        <li key="signin"><Link to="/Signin">Signin</Link></li>,
-        <li key="signup"><Link to="/signup">Signup</Link></li>
+        <li key="signin"><Link to="/Signin">Signin</Link></li>
       ]
     }
   }
