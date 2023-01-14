@@ -112,14 +112,12 @@ const UserProfile = () => {
     //vCard.addBday("20100101")
     vCard.addEmail(userProfile.user.email)
     console.log("getvcard called")
+    console.log("userprofile is", userProfile)
+    console.log("getvcard2 called")
     if (userProfile.user.workemail) {
       console.log("workemail called", userProfile.user.workemail)
       vCard.addEmail(userProfile.user.workemail, "work-email")
     }
-    //https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Heart_coraz%C3%B3n.svg/800px-Heart_coraz%C3%B3n.svg.png
-    //vCard.addPhoto("https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Heart_coraz%C3%B3n.svg/800px-Heart_coraz%C3%B3n.svg.png")
-    //vCard.addLogo("https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Heart_coraz%C3%B3n.svg/800px-Heart_coraz%C3%B3n.svg.png")
-
     if (userProfile.user.phone) {
       vCard.addPhone(userProfile.user.phone)
     }
@@ -164,11 +162,11 @@ const UserProfile = () => {
       vCard.addNote(userProfile.user.notes)
     }
     socials.map((item) => {
-      if (state[item.id]) {
+      if (userProfile.user[item.id]) {
         if (item.id === "wechat") {
-          vCard.addSocial(item.shortlink + state[item.id], item.vcard, ":")
+          vCard.addSocial(item.shortlink + userProfile.user[item.id], item.vcard, ":")
         } else {
-          vCard.addSocial(item.shortlink + state[item.id], item.vcard)
+          vCard.addSocial(item.shortlink + userProfile.user[item.id], item.vcard)
         }
       }
     })

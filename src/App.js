@@ -38,7 +38,7 @@ const Routing = () => {
     <>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/Signin" element={<Signin />} />
+        <Route path="/signin" element={<Signin />} />
         <Route exact path="/profile" element={<Profile />} />
         <Route path="/profile/:userid" element={<UserProfile />} />
         <Route exact path="/reset" element={<Reset />} />
