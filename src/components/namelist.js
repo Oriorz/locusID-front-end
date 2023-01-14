@@ -182,7 +182,7 @@ module.exports = {
       example: "...",
       link: "https://www.facebook.com/",
       shortlink: "www.facebook.com/",
-      vcard: "小红书"
+      vcard: "xiaohongshu"
     },
     {
       id: "reddit",
