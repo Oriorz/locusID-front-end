@@ -91,7 +91,7 @@ const FirstTimeSetup = () => {
   return (
     <div className='mycard'>
       <div className="card auth-card input-field">
-        <h2>Activate Account</h2>
+        <h2>set Account Password</h2>
         <input
           type="text"
           placeholder='name'
@@ -136,7 +136,7 @@ const FirstTimeSetup = () => {
         <button className="btn waves-effect waves-light blue darken-2"
           onClick={() => reflectReq()}
         >
-          Activate Account
+          Set Password
         </button>
       </div>
     </div>

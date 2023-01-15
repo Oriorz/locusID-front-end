@@ -153,8 +153,8 @@ module.exports = {
       title: "Skype",
       src: "../images/skype.png",
       example: "...",
-      link: "https://www.facebook.com/",
-      shortlink: "www.facebook.com/",
+      link: "https://www.skype.com/",
+      shortlink: "www.skype.com/",
       vcard: "Skype"
     },
     {
@@ -171,8 +171,8 @@ module.exports = {
       title: "Foursquare",
       src: "../images/foursquare.png",
       example: "...",
-      link: "https://www.facebook.com/",
-      shortlink: "www.facebook.com/",
+      link: "https://www.foursquare.com/",
+      shortlink: "www.foursquare.com/",
       vcard: "Foursquare"
     },
     {
@@ -180,8 +180,8 @@ module.exports = {
       title: "小红书",
       src: "../images/xiaohongshu.png",
       example: "...",
-      link: "https://www.facebook.com/",
-      shortlink: "www.facebook.com/",
+      link: "https://www.xiaohongshu.com/user/profile/",
+      shortlink: "https://www.xiaohongshu.com/user/profile/",
       vcard: "xiaohongshu"
     },
     {
@@ -189,8 +189,8 @@ module.exports = {
       title: "Reddit",
       src: "../images/reddit.png",
       example: "...",
-      link: "https://www.facebook.com/",
-      shortlink: "www.facebook.com/",
+      link: "https://www.reddit.com/",
+      shortlink: "www.reddit.com/",
       vcard: "Reddit"
     }
   ],

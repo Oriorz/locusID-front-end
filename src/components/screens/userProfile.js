@@ -162,6 +162,8 @@ const UserProfile = () => {
     if(userProfile.user.workaddress) {
       vCard.addAddress(userProfile.user.address, "work")
     }
+
+    vCard.addNote("")
     
     socials.map((item) => {
       if (userProfile.user[item.id]) {
