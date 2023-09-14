@@ -1,13 +1,83 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+@layer base {
+    :root {
+        --color-text-base: #9d91d4;
+        --color-text-button: #9d91d4;
+        --color-fill: #ffffff;
+        --color-button-fill: #bbd3f1;
+        --color-line-base: #000000;
+    }
+    .theme-green {
+        /* --color-text-base: #ffffff; */
+        /* --color-fill: #354f31 ;
+        --color-button-fill: #d6ecf3; */
+        /* --color-fill: #00552e ;
+        --color-button-fill: #fddea5; */
+        /* --color-text-base: #e9f4c2; */
+        --color-text-base: #AD894F;
+        /* --color-text-button: #121212; */
+        --color-text-button: #84693d;
+        --color-fill: #00552e ;
+        /* --color-button-fill: #e8d3c7; */
+        --color-button-fill: #BAC192;
+        --color-line-base: #ffffff;
+    }
+    .theme-black {
+        --color-text-base: #FFD700 ;
+        --color-text-button: #FFD700;
+        --color-fill: #121212;
+        --color-button-fill: #434f48;
+        --color-line-base: #FFD700;
+    }
+    .theme-purple {
+        --color-text-base: #fff8e8;
+        --color-text-button: #111802;
+        --color-fill: #a765dc;
+        --color-button-fill: #ffdd92;
+        /* --color-button-fill: #beffcc; */
+        --color-line-base: #fff8e8;
+    }
+    .theme-brown {
+        /* --color-text-base: #522f18; */
+        --color-text-base: #6D5F3F;
+        --color-text-button: #6D5F3F;
+        /* --color-text-button: #522f18; */
+        --color-fill: #e7c6a3;
+        /* --color-button-fill: #cf9269  ; */
+        --color-button-fill: #F1CF93  ;
+        /* --color-button-fill: #beffcc; */
+        --color-line-base: #522f18;
+    }
+    .theme-red {
+        --color-text-base: #111802;
+        /* --color-text-button: #111802; */
+        --color-text-button: #111802;
+        /* --color-fill: #d83206; */
+        /* --color-fill: #f03752; */
+        --color-button-fill: #f9d3e3  ;
+        --color-fill: #ff577e;
+        /* --color-button-fill: #e8473d; */
+        --color-line-base: #522f18;
+    }
+    .theme-yellow {
+        --color-text-base: #e02d39;
+        /* --color-text-button: #111802; */
+        --color-text-button: #111802;
+        /* --color-fill: #d83206; */
+        /* --color-fill: #f03752; */
+        --color-button-fill: #ff7d20  ;
+        --color-fill: #ffeb38;
+        /* --color-button-fill: #e8473d; */
+        --color-line-base: #522f18;
+    }
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
+/* @layer utilities{
+  .box::before{
+    @apply content-[''] absolute bg-[conic-gradient(#04b0ee_20deg, transparent_120deg)] top-[-25%] left-[-25%] animate-fullSpin
+  }
+} */

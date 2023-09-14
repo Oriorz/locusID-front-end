@@ -1,29 +1,121 @@
 /* eslint-disable no-useless-concat */
-import React, { useEffect, useState, useContext, useRef } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { UserContext } from "../../App";
-import { useNavigate, useParams } from "react-router-dom";
-import { socials, state_false, state_true } from "../namelist";
+import { useParams } from "react-router-dom";
+import { socials } from "../namelist";
 import M from "materialize-css";
-import CopyLink from "../copyLink";
-import ShowQR from "../ShowQR";
+import CopyLink from "../function/copyLink";
+import ShowQR from "../function/ShowQR";
 import GetVCard from "../GetVCard";
+import EmailActivation from "../function/EmailActivation";
+import { FloatSignin } from "../function/FloatSignin";
+import { ProfileNotes } from "../function/ProfileNotes";
+import { InputProfile } from "../function/InputProfile";
+import { EmbedMap } from "../function/EmbedMap";
+import { GetMapMetaData } from "../function/GetMapMetaData";
+import { CreateLink } from "../function/CreateLink";
+import { ScreenInfo } from "../function/ScreenInfo";
+import { ProfileSocials } from "../function/ProfileSocials";
+import HorizontalCard from "../function/HorizontalCard";
+import NameTag from "../function/NameTag";
+import CoverPhoto from "../function/CoverPhoto";
+import UserContact from "../function/UserContact";
 //const { copyLink } = require("../copyLink");
 //var fs = require('fs');
 
 const UserProfile = () => {
-  const listRef = useRef();
-  const navigate = useNavigate();
+  const { state, dispatch } = useContext(UserContext); // user state context
+  /* const listRef = useRef();
+  const navigate = useNavigate(); */
   const [userProfile, setProfile] = useState(null);
-  const { state, dispatch } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { userid } = useParams();
-  const [showFollow, setShowFollow] = useState(
+  /* const [showFollow, setShowFollow] = useState(
     state ? !state.following.includes(userid) : true
-  );
+  ); */
+  /* const [token, setToken] = useState(getToken()) */
+  const [token, setToken] = useState(false);
+  const [theme, setTheme] = useState("root");
+  const [name, setName] = useState("");
+  const [organization, setOrganization] = useState("");
+  const [title, setTitle] = useState("");
+  const themeList = [
+    "theme-purple",
+    "theme-green",
+    "theme-black",
+    "theme-brown",
+    "theme-red",
+    "theme-yellow",
+  ];
+  useEffect(() => {
+    const userToken = getToken();
+    setToken(userToken);
+  }, []);
 
   useEffect(() => {
-    //this use effect is to get user info
+    themeList.forEach((item) => {
+      document.documentElement.classList.remove(item);
+    });
+    if (theme === "root") {
+    } else {
+      document.documentElement.classList.add(theme);
+    }
+  }, [theme]);
+
+  const handleNameChange = (event) => {
+    setName(event.target.value);
+  };
+
+  const handleOrgChange = (event) => {
+    setOrganization(event.target.value);
+  };
+
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);
+  };
+
+  const handleEdit = (value, text) => {
+    if (!localStorage.getItem("jwt")) {
+      alert("not signed in");
+      return;
+    }
+    fetch(`/updatedetails/${text}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+      body: JSON.stringify({
+        value: value,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setProfile({ user: data });
+        console.log("updatedetails/name result is ", data);
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ ...state, [text]: data[text] })
+        );
+        dispatch({
+          type: "UPDATESOCIALS",
+          payload: { theKey: text, theValue: data[text] },
+        });
+        //window.location.reload()
+      });
+  };
+
+  const getToken = () => {
+    const tokenString = localStorage.getItem("jwt");
+    /* const userToken = JSON.parse(tokenString) */
+    /* return userToken?.token */
+    return tokenString;
+  };
+
+  //this use effect is to get user info
+  useEffect(() => {
+    console.log("get user info for user profile");
     fetch(`/api/user/${userid}`, {
       method: "get",
       headers: {
@@ -33,301 +125,285 @@ const UserProfile = () => {
       .then((res) => res.json())
       .then((result) => {
         setProfile(result);
+        //pending setTheme
+        if (result.user.theme) {
+          setTheme(result.user.theme);
+        }
+        console.log("profile is ", result);
       });
-  }, []);
+  }, [userid]);
 
   useEffect(() => {
     setTimeout(() => {
       var elems = document.querySelectorAll(".modal");
-      var instances = M.Modal.init(elems);
+      M.Modal.init(elems);
+      var elems1 = document.querySelectorAll("select");
+      M.FormSelect.init(elems1);
+      var elems2 = document.querySelectorAll(".collapsible");
+      M.Collapsible.init(elems2, {
+        container: document.body,
+        constrainWidth: false,
+      });
     }, 2000);
+    var elemsa = document.querySelectorAll(".modal");
+    M.Modal.init(elemsa);
+    var elemsb = document.querySelectorAll("select");
+    M.FormSelect.init(elemsb);
+    var elemsc = document.querySelectorAll(".collapsible");
+    M.Collapsible.init(elemsc, {
+      container: document.body,
+      constrainWidth: false,
+    });
   }, []);
 
-  const GoRegistration = (event) => {
-    event.preventDefault();
-    if (
-      !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-        email
-      )
-    ) {
-      return M.toast({ html: "invalid email", classes: "red darken-3" });
-    }
-    M.toast({ html: `user profile id is ${userProfile.user._id} ${userid}` });
-    fetch("/api/bind-email", {
-      method: "post",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        userid: userid,
-        password,
-        email,
-      }),
-    })
-      .then((res) => res.json())
-      .then((result) => console.log(result));
-    //navigate(`/setup/${userid}/${password}`)
-  };
-
   return (
-    <>
-      {/* <button onClick={testRoute("miao")}>api</button> */}
+    <div>
+      {/* <ScreenInfo /> */}
+      {/* <div className={`${theme}`}> */}
+      <FloatSignin
+        token={token}
+        setToken={setToken}
+        setTheme={setTheme}
+        theme={theme}
+        setProfile={setProfile}
+      />
       {userProfile ? (
-        userProfile.user.isInitialized == true ? (
-          <div style={{ maxWidth: "550px", margin: "0px auto" }}>
-            {/* {console.log("userprofile.user is ", userProfile.user)} */}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-around",
-                margin: "18px 0px",
-                borderBottom: "3px solid grey",
-              }}
-            >
-              <div>
-                <img
-                  style={{
-                    width: "200px",
-                    height: "200px",
-                    borderRadius: "80px",
-                  }}
-                  src={userProfile.user.pic}
+        userProfile.user.isInitialized === true ? (
+          <div /* className="flex flex-col justify-center items-center" */>
+            <CoverPhoto token={token} userProfile={userProfile} />
+            <div className="sm:max-w-4xl md:max-w-4xl lg:max-w-6xl mx-auto bg-skin-fill">
+              <div className="h-28"> </div>
+              <div className="flex flex-col items-center justify-center -z-10 my-5 mx-auto w-11/12 border-b-2 border-skin-base pb-4">
+                {userProfile && (
+                  <>
+                    <h1 className="font-poppins text-4xl text-skin-base">
+                      {userProfile.user.name
+                        ? userProfile.user.name
+                        : "Your Name"}{" "}
+                      {token && (
+                        <i
+                          className="material-icons modal-trigger ml-2 mr-1 mb-0 bg-skin-fill border-skin-base border-solid border-2 select-none"
+                          href={"#modal" + "editName"}
+                        >
+                          edit
+                        </i>
+                      )}
+                    </h1>
+                    <p className="font-poppins text-xl text-skin-base mb-3">
+                      {userProfile.user.organization
+                        ? userProfile.user.organization
+                        : "Your Organization"}
+                      {token && (
+                        <i
+                          className="material-icons modal-trigger ml-2 mr-1 mb-0 bg-skin-fill border-skin-base border-solid border-2 select-none"
+                          href={"#modal" + "editOrg"}
+                        >
+                          edit
+                        </i>
+                      )}
+                      <strong> &nbsp;&nbsp; | &nbsp;&nbsp; </strong>{" "}
+                      {userProfile.user.title
+                        ? userProfile.user.title
+                        : "Your Title"}{" "}
+                      {token && (
+                        <i
+                          className="material-icons modal-trigger ml-2 mr-1 mb-0 bg-skin-fill border-skin-base border-solid border-2 select-none"
+                          href={"#modal" + "editTitle"}
+                        >
+                          edit
+                        </i>
+                      )}
+                    </p>
+                    <div
+                      id={"modal" + "editName"}
+                      className="modal bottom-sheet"
+                    >
+                      <div className=" mx-auto p-0 flex flex-col items-center">
+                        <p className="text-md mt-3 mb-1 p-1 underline">
+                          {" "}
+                          Old Name : {userProfile.user.name}
+                        </p>
+                      </div>
+                      <p className="text-md m-1 p-1 text-center"> Change to </p>
+                      <div className="row items-center justify-around  max-w-lg mx-auto mt-2">
+                        <p className="col s2 text-black items-center justify-around text-md">
+                          {" "}
+                          New:{" "}
+                        </p>
+                        <input
+                          className="browser-default text-sm col s10 "
+                          defaultValue={userProfile.user.name}
+                          onChange={handleNameChange}
+                        />
+                      </div>
+                      <div className="mx-auto items-center justify-center flex mb-2 pb-2">
+                        <button
+                          className="btn modal-close waves-effect waves-light blue darken-3 mt-3 mx-3"
+                          onClick={() => {
+                            if (!name) {
+                              M.toast({ html: "Please key in name" });
+                              return;
+                            }
+                            handleEdit(name, "name");
+                          }}
+                        >
+                          Edit
+                        </button>
+                        <button className="btn modal-close waves-effect waves-light green darken-2 mt-3 mx-3 ">
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                    <div
+                      id={"modal" + "editOrg"}
+                      className="modal bottom-sheet"
+                    >
+                      <div className=" mx-auto p-0 flex flex-col items-center">
+                        <p className="text-md mt-3 mb-1 p-1 underline">
+                          {" "}
+                          Old Organization : {userProfile.user.organization}
+                        </p>
+                      </div>
+                      <p className="text-md m-1 p-1 text-center"> Change to </p>
+                      <div className="row items-center justify-around  max-w-lg mx-auto mt-2">
+                        <p className="col s2 text-black items-center justify-around text-md">
+                          {" "}
+                          New:{" "}
+                        </p>
+                        <input
+                          className="text-sm col s10"
+                          defaultValue={userProfile.user.organization}
+                          onChange={handleOrgChange}
+                        />
+                      </div>
+                      <div className="mx-auto items-center justify-center flex mb-2 pb-2">
+                        <button
+                          className="btn modal-close waves-effect waves-light blue darken-3 mt-3 mx-3"
+                          onClick={() => {
+                            if (!organization) {
+                              M.toast({ html: "Please key in organization" });
+                              return;
+                            }
+                            handleEdit(organization, "organization");
+                          }}
+                        >
+                          Edit
+                        </button>
+                        <button className="btn modal-close waves-effect waves-light green darken-2 mt-3 mx-3 ">
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                    <div
+                      id={"modal" + "editTitle"}
+                      className="modal bottom-sheet"
+                    >
+                      <div className=" mx-auto p-0 flex flex-col items-center">
+                        <p className="text-md mt-3 mb-1 p-1 underline">
+                          {" "}
+                          Old Title : {userProfile.user.title}
+                        </p>
+                      </div>
+                      <p className="text-md m-1 p-1 text-center"> Change to </p>
+                      <div className="row items-center justify-around  max-w-lg mx-auto mt-2">
+                        <p className="col s2 text-black items-center justify-around text-md">
+                          {" "}
+                          New:{" "}
+                        </p>
+                        <input
+                          className="text-sm col s10"
+                          defaultValue={userProfile.user.title}
+                          onChange={handleTitleChange}
+                        />
+                      </div>
+                      <div className="mx-auto items-center justify-center flex mb-2 pb-2">
+                        <button
+                          className="btn modal-close waves-effect waves-light blue darken-3 mt-3 mx-3"
+                          onClick={() => {
+                            if (!title) {
+                              M.toast({ html: "Please key in Title" });
+                              return;
+                            }
+                            handleEdit(title, "title");
+                          }}
+                        >
+                          Edit
+                        </button>
+                        <button className="btn modal-close waves-effect waves-light green darken-2 mt-3 mx-3 ">
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  </>
+                )}
+                {/* <div className="grid grid-cols-3 items-center justify-around my-auto px-3">
+                  <div key="getVCard">
+                    <GetVCard userProfile={userProfile} />
+                  </div>
+                  <div>
+                    <button className="btn waves-effect waves-light green darken-3 w-40 font-poppins">
+                      asdf
+                    </button>
+                  </div>
+                  <div>
+                    <button className="btn waves-effect rounded-full waves-light green darken-3 "></button>
+                  </div>
+                </div> */}
+                <UserContact
+                  userProfile={userProfile}
+                  token={token}
+                  setProfile={setProfile}
                 />
               </div>
-              <div>
-                <h4>{userProfile.user.name}</h4>
-                <h5>{userProfile.user.email}</h5>
-
-                <div key="getVCard">
-                  <GetVCard userProfile={userProfile} />
-                </div>
-              </div>
-
-              {/* <a className="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
-              <div id="modal1" className="modal">
-                <div className="modal-content">
-                  <h4>Modal Header</h4>
-                  <p>A bunch of text</p>
-                </div>
-                <div className="modal-footer">
-                  <a href="#!" className="modal-close waves-effect waves-green btn-flat">Agree</a>
-                </div>
-              </div> */}
-            </div>
-            {userProfile.user.notes ? (
-              <>
-                <div style={{ textAlign: "center" }}>About Me:</div>
-                {/* <textarea style={{ textAlign: "center", border:"none", row:"10" }}>{userProfile.user.notes}</textarea> */}
-                <div
-                  style={{
-                    textAlign: "center",
-                    border: "none",
-                    "white-space": "pre-wrap",
-                  }}
-                >
-                  {userProfile.user.notes}
-                </div>
-              </>
-            ) : (
-              <div>b</div>
-            )}
-            <div>
+              <ProfileNotes
+                userProfile={userProfile}
+                token={token}
+                setProfile={setProfile}
+              />
               <div>
                 <ShowQR />
               </div>
-            </div>
-            <div style={{ borderBottom: "3px solid grey" }}></div>
-            <br></br>
-            {/* <div className='social'>
-              <div className="collection-wrapper" >
-                {
-                  socials.map((item, index) => {
-                    return (
-                      <>
-                        {userProfile.user[item.id] ?
-                            <div 
-                            className="collection-item" key={item.id + "_key"}>
-                              <img id="social-logo" 
-                                key={item.id + "_img"}
-                                className="circle modal-trigger"
-                                href={"#modal" + item.id}
-                                src={item.src}
-                                alt={item.id}
-                              />
-                              <div id={"modal" + item.id} className="modal bottom-sheet">
-                                <div className="modal-content">
-                                  <h4 style={{ textAlign: "center" }}>{item.title}</h4>
-                                  <p style={{ textAlign: "center" }}>
-                                    <a target="_blank" href={item.link + userProfile.user[item.id]}>
-                                      {item.link}{userProfile.user[item.id]}
-                                    </a>
-                                    <div></div>
-                                    <button onclick={() => {
-                                      copyLink(item.id)
-                                    }}> COPY </button>
-                                    <br></br>
-                                    <br></br>
-                                    <br></br>
-                                    <br></br>
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-                            :
-                            ""
-                        }
-                      </>
-                    )
-                  })
-                }
-              </div>
-            </div> */}
-            <div className="social">
-              <div className="collection-wrapper">
-                {socials.map((item, index) => {
-                  return (
-                    <>
-                      {userProfile.user[item.id] ? (
-                        <div className="collection-item" key={item.id + "_key"}>
-                          <div
-                            className="modal-trigger"
-                            href={"#modal" + item.id}
-                            style={{
-                              display: "flex",
-                              justifyContent: "center",
-                            }}
-                          >
-                            <img
-                              id="social-logo"
-                              key={item.id + "_img"}
-                              className="circle"
-                              src={item.src}
-                              alt={item.id}
-                            />
-                          </div>
-                          <div
-                            id={"modal" + item.id}
-                            className="modal bottom-sheet"
-                          >
-                            <div className="modal-content">
-                              <h4 style={{ textAlign: "center" }}>
-                                {item.title}
-                              </h4>
-                              <p style={{ textAlign: "center" }}>
-                                <a
-                                  target="_blank"
-                                  href={item.link + userProfile.user[item.id]}
-                                >
-                                  {item.link}
-                                  {userProfile.user[item.id]}
-                                </a>
 
-                                <div>
-                                  <CopyLink
-                                    link={item.link + userProfile.user[item.id]}
-                                  />
-                                </div>
-                                {/* <button
-                                  onClick={() => {
-                                    copyLink("item.id");
-                                  }}
-                                >
-                                  {" "}
-                                  COPY{" "}
-                                </button> */}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      ) : (
-                        ""
-                      )}
-                    </>
-                  );
-                })}
-              </div>
-            </div>
+              <CreateLink userProfile={userProfile} token={token} />
+              <div className="border-b-2  border-skin-base w-11/12 mx-auto"></div>
+              <br></br>
 
-            <br></br>
-            <div style={{ borderBottom: "3px solid grey" }}></div>
-            <br></br>
-            <br></br>
-            <>
-              {/* https://youtu.be/OImBxPnTLZw?t=185 */}
-              {/* <iframe style={{ textAlign: "center" }} width="420" height="315" src="https://www.youtube.com/embed/gCZ3y6mQpW0&list=PL4cUxeGkcC9gGrbtvASEZSlFEYBnPkmff" title="description"></iframe>
-               */}
+              <ProfileSocials userProfile={userProfile} token={token} />
+              <br></br>
+              <div className="border-b-2 border-skin-base w-11/12 mx-auto"></div>
               <br></br>
               <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-            </>
+              <>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+
+                <HorizontalCard />
+
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+              </>
+            </div>
           </div>
         ) : (
-          <>
-            <div className="mycard">
-              <div className="card auth-card input-field">
-                <h2>Email Activation</h2>
-
-                <div className="row">
-                  <form className="col s12">
-                    <div className="row">
-                      <div className="input-field col s12">
-                        <input
-                          type="text"
-                          placeholder="email"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                        />
-                        <label className="active" for="email">
-                          Email
-                        </label>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="input-field col s12">
-                        <input
-                          type="password"
-                          placeholder="password"
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <label className="active" for="password">
-                          Password from Card Cover
-                        </label>
-                      </div>
-                    </div>
-                  </form>
-                  <div className="notes">
-                    <p>Notes:</p>
-                    <p>
-                      An email containing a link for activation will be sent to
-                      the email address provided above for the purpose of
-                      binding the account. Please click on the link in the email
-                      to complete the activation process.
-                    </p>
-                  </div>
-                </div>
-                <button
-                  className="btn waves-effect waves-light blue darken-2"
-                  onClick={GoRegistration}
-                >
-                  Bind
-                </button>
-                {console.log(userProfile.user)}
-              </div>
-            </div>
-          </>
+          <EmailActivation
+            userProfile={userProfile}
+            email={email}
+            setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
+            userid={userid}
+          />
         )
       ) : (
         <h2>loading...!</h2>
       )}
-    </>
+    </div>
   );
 };
 

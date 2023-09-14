@@ -102,15 +102,6 @@ a {
   /* background-color: aqua;
   border-color: aqua; */
 }
- .plus {
-  width: 100%;
-  height: 100%;
-  padding: 20px;
-  /* width: 130px; 
-  height: 130px; */
-  /* background-color: aqua;
-  border-color: aqua; */
-}
 
 
 .circle{
@@ -166,7 +157,7 @@ body {
 
 
 .cropper-crop-box, .cropper-view-box {
-  border-radius: 50%;
+  border-radius: 0%;
 }
 
 .cropper-view-box {
@@ -174,12 +165,6 @@ body {
   outline: 0;
 }
 
-.coverphoto.cropper-crop-box{
-  border-radius: 0% !important;
-}
-.coverphoto.cropper-view-box{
-  border-radius: 0% !important;
-}
 
 #toast-container {
   min-width: 10%;
@@ -215,60 +200,3 @@ input:not([type]), input[type=text], input[type=password], input[type=email], in
   box-sizing: content-box;
   transition: all 0.3s;
 }
-
-.inline-icon {
-  font-size:28px;
-  line-height:36px;
-}
-
-/* ---------- Begin .rotating-border ---------- */
-/* @keyframes spin {
-  from {transform: translate(-50%, -50%) rotate(0);}
-  to   {transform: translate(-50%, -50%) rotate(360deg);}
-}
-.rotating-border {
-  --border-radius: 1rem;
-  --border-size: 0.5rem;
-  --border-bg: conic-gradient(red, yellow, lime, aqua, blue, magenta, red);
-  --padding: 1rem;
-  
-  position: relative;
-  overflow: hidden;
-  font-size: 2rem;
-  padding: calc(var(--padding) + var(--border-size));
-  border-radius: var(--border-radius);
-  display: inline-block;
-  
-  &::before {
-    content: '';
-    display: block;
-    background: var(--border-bg);
-    width: calc(100% * 1.41421356237);
-    padding-bottom: calc(100% * 1.41421356237);
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 100%;
-    z-index: 1;
-    animation: spin 5s linear infinite;
-  }
-  &--reverse::before{
-    animation-direction: reverse;
-  }
-  &::after{
-    content: '';
-    position: absolute;
-    inset: var(--border-size);
-    background: white;
-    z-index: 2;
-    border-radius: calc(var(--border-radius) - var(--border-size));
-  }
-}
-
-.rotating-border--rainbow{
-  --border-radius: 3.5rem;
-  --border-size: 0.5rem;
-  --border-bg: conic-gradient(red, yellow, lime, aqua, blue, magenta, red);
-} */
-/* ---------- End .rotating-border ---------- */

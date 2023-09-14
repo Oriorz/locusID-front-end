@@ -1,27 +1,31 @@
 import React, { useState, useContext, useReducer } from "react";
 import { UserContext } from "../../App";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import M from "materialize-css";
 
-const NewPassword = () => {
+const ResetPassword = () => {
   const navigate = useNavigate();
-  const [password, setPassword] = useState("");
-  const { token } = useParams();
-  console.log(token);
+  const [email, setEmail] = useState("");
   const PostData = () => {
-    fetch("/api/new-password", {
+    if (
+      !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+        email
+      )
+    ) {
+      return M.toast({ html: "invalid email", classes: "red darken-3" });
+    }
+    //fetch("/api/reset-password", {
+    fetch("/api/reset-password", {
       method: "post",
       headers: {
         "Content-type": "application/json",
       },
       body: JSON.stringify({
-        password,
-        token,
+        email,
       }),
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.error) {
           M.toast({ html: data.error, classes: "red darken-3" });
         } else {
@@ -38,23 +42,20 @@ const NewPassword = () => {
       <div className="card auth-card input-field">
         <h2>iTap</h2>
         <input
-          type="password"
-          placeholder="enter a new password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          type="text"
+          placeholder="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <button
           className="btn waves-effect waves-light blue darken-2"
           onClick={() => PostData()}
         >
-          Change Password
+          Reset Password
         </button>
-        <h5>
-          <Link to="/signup">Don't have an account?</Link>
-        </h5>
       </div>
     </div>
   );
 };
 
-export default NewPassword;
+export default ResetPassword;

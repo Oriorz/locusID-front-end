@@ -20,10 +20,23 @@ export const reducer = (state, action) => {
       pic:action.payload.pic
     }
   }
+  if (action.type === "UPDATECOVERPIC") {
+    return {
+      ...state,
+      coverPic:action.payload.coverPic
+    }
+  }
   if (action.type === "UPDATESOCIALS") {
     return {
       ...state,
       [action.payload.theKey]:action.payload.theValue
+    }
+  }
+  if (action.type === "UPDATEADDRESS") {
+    return {
+      ...state,
+      address:action.payload.address,
+      maplink:action.payload.maplink
     }
   }
   return state

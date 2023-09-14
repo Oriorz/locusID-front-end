@@ -9,15 +9,17 @@ import CreatePost from "./components/screens/CreatePost";
 import UserProfile from "./components/screens/userProfile";
 import Test from "./components/screens/Test";
 import TestImage from "./components/screens/TestImage";
-import Reset from "./components/screens/Reset";
+import ResetPassword from "./components/screens/ResetPassword";
 import React, { useEffect, createContext, useReducer, useContext } from "react";
 import { reducer, initialState } from "./reducers/userReducer";
 import SubscribesUsersPosts from "./components/screens/SubscribesUsersPosts";
 import NewPassword from "./components/screens/NewPassword";
 import AdminSignup from "./components/screens/AdminSignup";
-import FirstTimeSetup from "./components/screens/FirstTimeSetup";
+import FirstTimeSetup from "./archived/FirstTimeSetup";
 import UploadImage from "./components/screens/UploadImage";
 import NewUploadImage from "./components/screens/NewUploadImage";
+import Faq from "./components/screens/Faq";
+import ContactUs from "./components/screens/ContactUs";
 
 export const UserContext = createContext();
 
@@ -31,21 +33,25 @@ const Routing = () => {
       //navigate('/')
     } else {
       //if we need to use the navigate to /signin below, i need to find a  similar
-      //similar useHistory.location, maybe useLocation, to check if the location is /reset
+      //similar useHistory.location, maybe useLocation, to check if the location is /ResetPassword
       //navigate('/signin')
     }
   }, []);
   return (
     <>
       <Routes>
+        {/* This is public */}
         <Route path="/" element={<Home />} />
         <Route path="/signin" element={<Signin />} />
         <Route exact path="/profile" element={<Profile />} />
         <Route path="/profile/:userid" element={<UserProfile />} />
-        <Route exact path="/reset" element={<Reset />} />
+        <Route exact path="/resetpassword" element={<ResetPassword />} />
         <Route path="/reset/:token" element={<NewPassword />} />
         <Route path="/setup/:token" element={<FirstTimeSetup />} />
+        <Route path="/faq" element={<Faq />} />
+        <Route path="/contactus" element={<ContactUs />} />
 
+        {/* this is private */}
         <Route path="/adminsignup" element={<AdminSignup />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/create" element={<CreatePost />} />
@@ -53,6 +59,7 @@ const Routing = () => {
         <Route path="/test" element={<Test />} />
         <Route path="/testimage" element={<TestImage />} />
 
+        {/* This is testing */}
         <Route path="/uploadimage" element={<UploadImage />} />
         <Route path="/newuploadimage" element={<NewUploadImage />} />
       </Routes>
@@ -65,7 +72,7 @@ function App() {
   return (
     <UserContext.Provider value={{ state, dispatch }}>
       <BrowserRouter>
-        <NavBar />
+        {/* <NavBar /> */}
         <Routing />
       </BrowserRouter>
     </UserContext.Provider>

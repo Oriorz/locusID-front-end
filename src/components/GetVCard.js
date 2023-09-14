@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { socials } from "./namelist";
+import M from "materialize-css";
 
 function GetVCard({ userProfile }) {
   /* const handleVCard = (text) => {
@@ -71,9 +72,9 @@ function GetVCard({ userProfile }) {
     this.addUrl = function (text, type) {
       if (type) {
         this.vcard += "\n" + "URL;type=" + type + ";CHARSET=UTF-8:" + text;
-        return;
+      } else {
+        this.vcard += "\n" + "URL;CHARSET=UTF-8:" + text;
       }
-      this.vcard += "\n" + "URL;CHARSET=UTF-8:" + text;
     };
 
     this.addNick = function (text) {
@@ -91,7 +92,8 @@ function GetVCard({ userProfile }) {
     };
 
     this.addNote = function (text) {
-      this.vcard += "\n" + "NOTE;CHARSET=UTF-8:" + text;
+      const cleanText = text.replaceAll("\n", ". ");
+      this.vcard += "\n" + "NOTE;CHARSET=UTF-8:" + cleanText;
     };
 
     this.addAddress = function (text, type = "work" || "home") {
@@ -99,14 +101,20 @@ function GetVCard({ userProfile }) {
         //LABEL;CHARSET=UTF-8;TYPE=HOME:Home Address
         this.vcard += "\n" + "LABEL;CHARSET=UTF-8;TYPE=HOME:Home Address";
         this.vcard += "\n" + "ADR;CHARSET=UTF-8;TYPE=HOME:" + text;
-        return;
+      } else {
+        this.vcard += "\n" + "LABEL;CHARSET=UTF-8;TYPE=WORK:Work Address";
+        this.vcard += "\n" + "ADR;CHARSET=UTF-8;TYPE=WORK:" + text;
       }
-      this.vcard += "\n" + "LABEL;CHARSET=UTF-8;TYPE=WORK:Work Address";
-      this.vcard += "\n" + "ADR;CHARSET=UTF-8;TYPE=WORK:" + text;
     };
 
     this.addSocial = function (text, type = "custom", header = ":https://") {
-      this.vcard += "\n" + "X-SOCIALPROFILE;TYPE=" + type + header + text;
+      //this.vcard += "\n" + "X-SOCIALPROFILE;CHARSET=UTF-8;TYPE=" + type + header + text;
+      this.vcard +=
+        "\n" +
+        "X-SOCIALPROFILE;CHARSET=UTF-8;TYPE=CUSTOM:" +
+        type +
+        header +
+        text;
     };
 
     this.export = function () {
@@ -115,89 +123,68 @@ function GetVCard({ userProfile }) {
   }
 
   const handleVCard = () => {
+    if (!userProfile.user.vcard) {
+      M.toast({ html: "Please set Contact Card Details first" });
+      return;
+    }
     //var resultString = stringToAscii("BEGIN:VCARD")
 
     const vCard = new VCard();
-    userProfile.user.name
-      ? vCard.addName(userProfile.user.name)
+    userProfile.user.vcard?.name
+      ? vCard.addName(userProfile.user.vcard.name)
       : vCard.addName("My Name");
-    //vCard.addName(userProfile.user.name)
-    //vCard.addGender()
-    //vCard.addBday("20100101")
-    vCard.addEmail(userProfile.user.email);
-    console.log("getvcard called");
-    console.log("userprofile is", userProfile);
-    console.log("getvcard2 called");
-    if (userProfile.user.workemail) {
-      console.log("workemail called", userProfile.user.workemail);
-      vCard.addEmail(userProfile.user.workemail, "work-email");
+    vCard.addEmail(
+      userProfile.user.vcard?.email ? userProfile.user.vcard.email : ""
+    );
+    if (userProfile.user.vcard?.phone) {
+      vCard.addPhone(userProfile.user.vcard.phone);
     }
-    if (userProfile.user.phone) {
-      vCard.addPhone(userProfile.user.phone);
+    if (userProfile.user.vcard?.organization) {
+      vCard.addOrg(userProfile.user.vcard.organization);
     }
-    if (userProfile.user.homephone) {
-      vCard.addPhone(userProfile.user.homephone, "home");
+    if (userProfile.user.vcard?.title) {
+      vCard.addTitle(userProfile.user.vcard.title);
     }
-    if (userProfile.user.workphone) {
-      vCard.addPhone(userProfile.user.workphone, "work");
+    if (userProfile.user.vcard?.url) {
+      vCard.addUrl(userProfile.user.vcard.url, "home");
     }
-    if (userProfile.user.homefax) {
-      vCard.addPhone(userProfile.user.homefax, "home,fax");
+    if (userProfile.user.vcard?.address) {
+      vCard.addAddress(userProfile.user.vcard.address, "home");
     }
-    if (userProfile.user.workfax) {
-      vCard.addPhone(userProfile.user.workfax, "work,fax");
+    if (userProfile.user.vcard?.notes) {
+      vCard.addNote(userProfile.user.vcard.notes);
     }
-    if (userProfile.user.nickname) {
-      vCard.addNick(userProfile.user.nickname);
+    if (userProfile.user.vcard?.workemail) {
+      vCard.addEmail(userProfile.user.vcard.workemail, "work-email");
     }
-    if (userProfile.user.title) {
-      vCard.addTitle(userProfile.user.title);
+    if (userProfile.user.vcard?.homephone) {
+      vCard.addPhone(userProfile.user.vcard.homephone, "home");
+    }
+    if (userProfile.user.vcard?.workphone) {
+      vCard.addPhone(userProfile.user.vcard?.workphone, "work");
+    }
+    if (userProfile.user.vcard?.homefax) {
+      vCard.addPhone(userProfile.user.vcard?.homefax, "home,fax");
+    }
+    if (userProfile.user.vcard?.workfax) {
+      vCard.addPhone(userProfile.user.vcard?.workfax, "work,fax");
+    }
+    if (userProfile.user.vcard?.nickname) {
+      vCard.addNick(userProfile.user.vcard?.nickname);
     }
     /* if (userProfile.user.role) {
       vCard.addRole(userProfile.user.role)
     } */
-    if (userProfile.user.organization) {
-      vCard.addOrg(userProfile.user.organization);
+
+    if (userProfile.user.vcard?.workurl) {
+      vCard.addUrl(userProfile.user.vcard?.workurl, "work");
     }
 
-    if (userProfile.user.url) {
-      vCard.addUrl(userProfile.user.url, "home");
+    if (userProfile.user.vcard?.workaddress) {
+      vCard.addAddress(userProfile.user.vcard?.workaddress, "work");
     }
 
-    if (userProfile.user.workurl) {
-      vCard.addUrl(userProfile.user.workurl, "work");
-    }
-
-    if (userProfile.user.address) {
-      vCard.addAddress(userProfile.user.address, "home");
-    }
-    if (userProfile.user.workaddress) {
-      vCard.addAddress(userProfile.user.address, "work");
-    }
-
-    vCard.addNote("");
-
-    socials.map((item) => {
-      if (userProfile.user[item.id]) {
-        if (item.id === "wechat") {
-          vCard.addSocial(
-            item.shortlink + userProfile.user[item.id],
-            item.vcard,
-            ":"
-          );
-        } else {
-          vCard.addSocial(
-            item.shortlink + userProfile.user[item.id],
-            item.vcard
-          );
-        }
-      }
-
-      //vCard.addNote(notes)
-      /* if (userProfile.user.notes) {
-        vCard.addNote(userProfile.user.notes)
-      } */
-    });
+    vCard.addUrl(window.location.href, "itap");
 
     var greeting = vCard.export();
     greeting = stringToAscii(greeting);
@@ -212,10 +199,12 @@ function GetVCard({ userProfile }) {
   return (
     <>
       <button
-        className="btn waves-effect waves-light green darken-3"
+        className=" rounded-full select-none bg-button-fill w-16 h-16 text-skin-base text-center justify-center items-center drop-shadow-lg"
         onClick={() => handleVCard()}
       >
-        Get Contact
+        <i className="material-icons small inline-icon text-button-base">
+          file_download
+        </i>
       </button>
     </>
   );

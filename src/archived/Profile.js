@@ -5,7 +5,6 @@ import { socials, state_false, state_true, bios } from "../namelist";
 import M from "materialize-css";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
-import { FloatSignin } from "../function/FloatSignin";
 
 const Profile = () => {
   const { state, dispatch } = useContext(UserContext); // user state context
@@ -20,9 +19,57 @@ const Profile = () => {
   const cropImage = useRef("");
   const cropperInstance = useRef();
 
+  /* console.log("console log at Profile.js line 14, for state is,", state); */
+  //image handling process for updating profile image and loading profile image
+  /*   useEffect(() => {
+    if (finalImage) {
+      // total 2 parts, this part is the uploading photo handling part
+      const data = new FormData();
+      data.append("file", finalImage);
+      data.append("upload_preset", "insta-clone");
+      data.append("cloud_name", "cnq");
+      fetch("https://api.cloudinary.com/v1_1/xiaomiao/image/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          // this is 2nd part starting from here, it is deleting old pic
+          fetch("/api/updatepic", {
+            method: "put",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + localStorage.getItem("jwt"),
+            },
+            body: JSON.stringify({
+              pic: data.url,
+              oldpic: getFileName(state.pic),
+            }),
+          })
+            .then((res) => res.json())
+            .then((result) => {
+              console.log("useeffect return for /updatepic", result);
+              localStorage.setItem(
+                "user",
+                JSON.stringify({ ...state, pic: result.pic })
+              );
+              dispatch({ type: "UPDATEPIC", payload: result.pic });
+              window.location.reload();
+            });
+        })
+        .catch((err) => {
+          console.log("useEffect to fetch profile finalImage error is ", err);
+        });
+    }
+  }, [finalImage]); */
+
+  // tester piece of code to upload a photo using the file uploaded
   useEffect(() => {
     if (finalImage) {
       // total 2 parts, this part is the uploading photo handling part
+      //getBase64(finalImage).then((image64) => {
+
+      console.log("image64");
       fetch("/api/uploadpic", {
         method: "put",
         headers: {
@@ -50,6 +97,7 @@ const Profile = () => {
           })
             .then((res) => res.json())
             .then((result) => {
+              console.log("useeffect return for /updatepic", result);
               localStorage.setItem(
                 "user",
                 JSON.stringify({ ...state, pic: result.pic })
@@ -61,6 +109,7 @@ const Profile = () => {
         .catch((err) => {
           console.log("useEffect to fetch profile finalImage error is ", err);
         });
+      //});
     }
   }, [finalImage]);
 
@@ -77,6 +126,8 @@ const Profile = () => {
       setImage(reader.result);
     };
     reader.readAsDataURL(files[0]);
+    console.log("updatePhoto called");
+    /* setImage(file); */
   };
 
   function getRoundedCanvas(sourceCanvas) {
@@ -105,8 +156,12 @@ const Profile = () => {
 
   const getCropData = () => {
     if (cropperInstance.current) {
+      /* cropImage.current = cropperInstance.current
+        .getCroppedCanvas()
+        .toDataURL(); */
       var croppedCanvas = cropperInstance.current.getCroppedCanvas();
       var roundedCanvas = getRoundedCanvas(croppedCanvas);
+      /* console.log(roundedCanvas.toBlob((blob) => alert(blob.size))); */
       createBlobFromCanvas(roundedCanvas)
         .then((blob) => {
           alert(blob.size);
@@ -117,6 +172,7 @@ const Profile = () => {
       cropImage.current = roundedCanvas.toDataURL("image/jpeg", 0.7);
       setFinalImage(cropImage.current);
     }
+    console.log("This is the Croped Image", cropImage.current);
   };
 
   function createBlobFromCanvas(canvas) {
@@ -136,6 +192,17 @@ const Profile = () => {
     const theStringLength = theString.split("/").length;
     const theSuffix = theString.split("/")[theStringLength - 1].split(".")[0];
     return theSuffix;
+  };
+
+  const getBase64 = (file, onLoadCallback) => {
+    return new Promise(function (resolve, reject) {
+      var reader = new FileReader();
+      reader.onload = function () {
+        resolve(reader.result);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
   };
 
   const goToSignin = () => {
@@ -175,6 +242,8 @@ const Profile = () => {
     //TODO: clear the input field or inputrow.content, get the value in iput field, send the value in input field to backend /updatedetails API
     //(cont'), then chain on the success response to set the following on front end, else display err
     //frontend:
+    console.log("handle Confirm inputRow.content is", inputRow.content);
+    console.log("handle Confirm text is", text);
     const theValue = update_input.split(theLink);
     fetch(`/api/updatedetails/${text}`, {
       method: "put",
@@ -187,7 +256,10 @@ const Profile = () => {
       }),
     })
       .then((res) => res.json())
+      ///.then((res) => {
       .then((data) => {
+        console.log("response overall is ", data);
+        console.log("responsefrom /updatedetails is : ", data[text]);
         localStorage.setItem(
           "user",
           JSON.stringify({ ...state, [text]: data[text] })
@@ -243,18 +315,19 @@ const Profile = () => {
     Object.keys(isEditDisabled).map((e) => {
       isEditDisabled[e] = true;
     });
+    //setisEditDisabled({...isEditDisabled, [text]:true})
   };
 
   const showEdit = (text) => {
     Object.keys(isEditDisabled).map((e) => {
       isEditDisabled[e] = false;
     });
+    //setisEditDisabled({...isEditDisabled, [text]:true})
   };
 
   const renderList = () => {
     return state ? (
       <div>
-        <FloatSignin />
         <h4>Notes</h4>
         <ul className="collection">
           {state.notes ? (
@@ -376,6 +449,7 @@ const Profile = () => {
             return (
               <>
                 <li className="collection-item avatar" key={item.id}>
+                  {/* <i className="material-icons responsive-img">add</i> */}
                   <img
                     className="circle responsive-img"
                     src={item.src}
@@ -608,6 +682,10 @@ const Profile = () => {
     );
   };
 
+  const handleClick = () => {
+    console.log("handleClick() clicked");
+  };
+
   const showHandle = (theTitle, theContent) => {
     if (!theContent) {
       setInputRow({ ...inputRow, title: theTitle });
@@ -622,19 +700,62 @@ const Profile = () => {
     );
   };
 
+  const updateDetails = (text, value) => {
+    M.toast({ html: text, classes: "yellow darken-3" });
+    fetch(`/updatedetails/${text}`, {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+      body: JSON.stringify({
+        value,
+      }),
+    })
+      .then((res) => res.json())
+      .then((result) => console.log(result));
+    console.log(`updateDetails() return from /updatedetails/${text}`);
+    console.log("updateDetails() return type of value is ", typeof value);
+    console.log("updateDetails() return value is ", value);
+  };
+
   return state ? (
     <div>
-      <div className="p-1 text-center max-w-xl mx-auto bg-orange-200">
-        Profile Edit Mode
+      <div
+        style={{
+          padding: "3px",
+          textAlign: "center",
+          maxWidth: "550px",
+          margin: "0px auto",
+          border: "1px solid black",
+        }}
+      >
+        This is your account setup page
       </div>
-      <div className="max-w-xl mx-auto">
-        <div className="mx-auto my-4 border-b-2 border-gray-400">
-          <div className="flex justify-around">
-            <img
-              className="w-44 h-44 rounded-full "
-              src={state ? state.pic : "loading"}
-              alt="profile-pic"
-            />
+      <div style={{ maxWidth: "550px", margin: "0px auto" }}>
+        <div
+          style={{
+            margin: "18px 0px",
+            borderBottom: "1px solid grey",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-around",
+            }}
+          >
+            <div>
+              <img
+                style={{
+                  width: "160px",
+                  height: "160px",
+                  borderRadius: "80px",
+                }}
+                src={state ? state.pic : "loading"}
+                alt="profile-pic"
+              />
+            </div>
             <div>
               <h4>{state ? state.name : "loading"}</h4>
               <h5>{state ? state.email : "loading"}</h5>
@@ -643,45 +764,93 @@ const Profile = () => {
           <div className="file-field input-field">
             <div className="btn blue darken-1">
               <span>Upload pic</span>
-              <input type="file" onChange={updatePhoto} />
+              <input
+                type="file"
+                /* onChange={(e) => updatePhoto(e.target.files[0])} */
+                onChange={updatePhoto}
+              />
             </div>
             <div className="file-path-wrapper ">
               <input className="file-path validate" type="text" />
             </div>
           </div>
         </div>
+        <Cropper
+          className="h-[500px] w-[50%]"
+          width="400px"
+          height="400px"
+          initialAspectRatio={1}
+          aspectRatio={1}
+          src={image}
+          background={false}
+          responsive={true}
+          onInitialized={(instance) => {
+            //setCropper(instance);
+            cropperInstance.current = instance;
+          }}
+          zoomable={true}
+        />
         {image ? (
-          <Cropper
-            className="h-[500px]"
-            width="400px"
-            height="400px"
-            initialAspectRatio={1}
-            aspectRatio={1}
-            src={image}
-            background={false}
-            responsive={true}
-            onInitialized={(instance) => {
-              cropperInstance.current = instance;
-            }}
-            zoomable={true}
+          <button onClick={getCropData} className="bg-red-200 rounded p-[8px]">
+            Crop Image
+          </button>
+        ) : (
+          ""
+        )}
+
+        {finalImage === "" ? (
+          //""
+          console.log("finalImage", finalImage)
+        ) : (
+          <img
+            src={finalImage}
+            alt="croped"
+            className="h-[400px] w-[30%]"
+            width="300px"
+            height="300px"
           />
-        ) : (
-          ""
         )}
-        {image ? (
-          <div>
+        {/* <p key="getPicPath">
             <button
-              onClick={getCropData}
-              className="bg-red-200 rounded p-[8px]"
+              className="btn waves-effect waves-light red darken-3"
+              onClick={() => (
+                getPicPath()
+              )}
             >
-              Crop Image
+              get API
             </button>
-            <button>Clear Image</button>
-          </div>
-        ) : (
-          ""
-        )}
-        <div className="social">{renderList()}</div>
+          </p> */}
+        {/* <div className="selfcheck">Clicked Element is {display}</div>
+          <div className="selfcheck">InputRow.title : "{inputRow.title}" inputRow.content : "{inputRow.content}"</div> */}
+        <div className="social">
+          {/* <ul className="collection">
+              <li className="collection-item avatar" key="selftest-facebook">
+                <img key="facebook-input" className="circle" src="./images/whatsapp.jpg" alt="Facebook" />
+                <div className='row'>
+                  <div className='col s8'>
+                    <span className="title">Facebook</span>
+                    <p>First Line
+                      <br />
+                      Second Line
+                    </p>
+                  </div>
+                  <div className='col s4'>
+                    <button
+                      className="btn waves-effect waves-light blue darken-2"
+                      onClick={() => updateDetails("100", "xxx")}
+                    >
+                      Update Details 100 xxx
+                    </button>
+                  </div>
+                </div>
+              </li>
+              <li className="collection-item avatar" key="selftest-whatsapp">
+                <img key="whatsapp-input" className="circle" src="./images/whatsapp.jpg" alt="Facebook" />
+                <span className="title">Whastapp</span>
+              </li>
+            </ul> */}
+          {renderList()}
+        </div>
       </div>
     </div>
   ) : (
