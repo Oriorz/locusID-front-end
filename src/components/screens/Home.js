@@ -13,13 +13,30 @@ const Home = () => {
     return () => instances.destroy();
   }, []);
 
+  const checkStatus = () => {
+    fetch("/api/healthcheck", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Health Check : ", data.data);
+      });
+  };
+
   return (
     <div>
       <div className="home">
-        <div className="max-w-xl mx-auto my-0 p-2" >
-          <div
-            className="flex justify-around my-5 mx-auto border-b-2"
-          ></div>
+        <div
+          className="btn flex items-center justify-center mx-auto"
+          onClick={checkStatus}
+        >
+          Health Check
+        </div>
+        <div className="max-w-xl mx-auto my-0 p-2">
+          <div className="flex justify-around my-5 mx-auto border-b-2"></div>
           <ul className="collapsible">
             <li>
               <div className="collapsible-header">First</div>
