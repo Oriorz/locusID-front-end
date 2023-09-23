@@ -43,6 +43,7 @@ module.exports = {
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
+        rubikdirt:["Rubik Dirt", "sans-serif"]
       },
       ringOffsetColor: {
         //boxShadowColor: {

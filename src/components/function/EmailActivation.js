@@ -41,23 +41,26 @@ function EmailActivation({
   };
   return (
     <>
-      <div className="mycard">
-        <div className="card auth-card input-field">
-          <h2>Email Activation</h2>
+      <div className="mycard auth-card font-rubikdirt text-[70px] mt-3 py-1">iTap </div>
+      <div className="mycard  ">
+        <div className="card auth-card input-field  ">
+          <h2 className="text-xl">Email Activation</h2>
 
           <div className="row">
             <form className="col s12">
               <div className="row">
                 <div className="input-field col s12">
                   <input
-                    type="text"
+                    className="validate"
+                    type="email"
                     placeholder="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
-                  <label className="active" for="email">
+                  <label className="active" for="email" >
                     Email
                   </label>
+                  <span class="helper-text" data-error="wrong format, example: xxx@gmail.com" data-success="right"></span>
                 </div>
               </div>
               <div className="row">

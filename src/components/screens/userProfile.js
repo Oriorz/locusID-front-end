@@ -160,183 +160,191 @@ const UserProfile = () => {
     <div>
       {/* <ScreenInfo /> */}
       {/* <div className={`${theme}`}> */}
-      <FloatSignin
+      {/* <FloatSignin
         token={token}
         setToken={setToken}
         setTheme={setTheme}
         theme={theme}
         setProfile={setProfile}
-      />
+      /> */}
       {userProfile ? (
         userProfile.user.isInitialized === true ? (
-          <div /* className="flex flex-col justify-center items-center" */>
-            <CoverPhoto token={token} userProfile={userProfile} />
-            <div className="sm:max-w-4xl md:max-w-4xl lg:max-w-6xl mx-auto bg-skin-fill">
-              <div className="h-28"> </div>
-              <div className="flex flex-col items-center justify-center -z-10 my-5 mx-auto w-11/12 border-b-2 border-skin-base pb-4">
-                {userProfile && (
-                  <>
-                    <h1 className="font-poppins text-4xl text-skin-base">
-                      {userProfile.user.name
-                        ? userProfile.user.name
-                        : "Your Name"}{" "}
-                      {token && (
-                        <i
-                          className="material-icons modal-trigger ml-2 mr-1 mb-0 bg-skin-fill border-skin-base border-solid border-2 select-none"
-                          href={"#modal" + "editName"}
-                        >
-                          edit
-                        </i>
-                      )}
-                    </h1>
-                    <p className="font-poppins text-xl text-skin-base mb-3">
-                      {userProfile.user.organization
-                        ? userProfile.user.organization
-                        : "Your Organization"}
-                      {token && (
-                        <i
-                          className="material-icons modal-trigger ml-2 mr-1 mb-0 bg-skin-fill border-skin-base border-solid border-2 select-none"
-                          href={"#modal" + "editOrg"}
-                        >
-                          edit
-                        </i>
-                      )}
-                      <strong> &nbsp;&nbsp; | &nbsp;&nbsp; </strong>{" "}
-                      {userProfile.user.title
-                        ? userProfile.user.title
-                        : "Your Title"}{" "}
-                      {token && (
-                        <i
-                          className="material-icons modal-trigger ml-2 mr-1 mb-0 bg-skin-fill border-skin-base border-solid border-2 select-none"
-                          href={"#modal" + "editTitle"}
-                        >
-                          edit
-                        </i>
-                      )}
-                    </p>
-                    <div
-                      id={"modal" + "editName"}
-                      className="modal bottom-sheet"
-                    >
-                      <div className=" mx-auto p-0 flex flex-col items-center">
-                        <p className="text-md mt-3 mb-1 p-1 underline">
-                          {" "}
-                          Old Name : {userProfile.user.name}
-                        </p>
+          <>
+            <FloatSignin
+              token={token}
+              setToken={setToken}
+              setTheme={setTheme}
+              theme={theme}
+              setProfile={setProfile}
+            />
+            <div /* className="flex flex-col justify-center items-center" */>
+              <CoverPhoto token={token} userProfile={userProfile} />
+              <div className="sm:max-w-4xl md:max-w-4xl lg:max-w-6xl mx-auto bg-skin-fill">
+                <div className="h-28"> </div>
+                <div className="flex flex-col items-center justify-center -z-10 my-5 mx-auto w-11/12 border-b-2 border-skin-base pb-4">
+                  {userProfile && (
+                    <>
+                      <h1 className="font-poppins text-4xl text-skin-base">
+                        {userProfile.user.name
+                          ? userProfile.user.name
+                          : "Your Name"}{" "}
+                        {token && (
+                          <i
+                            className="material-icons modal-trigger ml-2 mr-1 mb-0 bg-skin-fill border-skin-base border-solid border-2 select-none"
+                            href={"#modal" + "editName"}
+                          >
+                            edit
+                          </i>
+                        )}
+                      </h1>
+                      <p className="font-poppins text-xl text-skin-base mb-3">
+                        {userProfile.user.organization
+                          ? userProfile.user.organization
+                          : "Your Organization"}
+                        {token && (
+                          <i
+                            className="material-icons modal-trigger ml-2 mr-1 mb-0 bg-skin-fill border-skin-base border-solid border-2 select-none"
+                            href={"#modal" + "editOrg"}
+                          >
+                            edit
+                          </i>
+                        )}
+                        <strong> &nbsp;&nbsp; | &nbsp;&nbsp; </strong>{" "}
+                        {userProfile.user.title
+                          ? userProfile.user.title
+                          : "Your Title"}{" "}
+                        {token && (
+                          <i
+                            className="material-icons modal-trigger ml-2 mr-1 mb-0 bg-skin-fill border-skin-base border-solid border-2 select-none"
+                            href={"#modal" + "editTitle"}
+                          >
+                            edit
+                          </i>
+                        )}
+                      </p>
+                      <div
+                        id={"modal" + "editName"}
+                        className="modal bottom-sheet"
+                      >
+                        <div className=" mx-auto p-0 flex flex-col items-center">
+                          <p className="text-md mt-3 mb-1 p-1 underline">
+                            {" "}
+                            Old Name : {userProfile.user.name}
+                          </p>
+                        </div>
+                        <p className="text-md m-1 p-1 text-center"> Change to </p>
+                        <div className="row items-center justify-around  max-w-lg mx-auto mt-2">
+                          <p className="col s2 text-black items-center justify-around text-md">
+                            {" "}
+                            New:{" "}
+                          </p>
+                          <input
+                            className="browser-default text-sm col s10 "
+                            defaultValue={userProfile.user.name}
+                            onChange={handleNameChange}
+                          />
+                        </div>
+                        <div className="mx-auto items-center justify-center flex mb-2 pb-2">
+                          <button
+                            className="btn modal-close waves-effect waves-light blue darken-3 mt-3 mx-3"
+                            onClick={() => {
+                              if (!name) {
+                                M.toast({ html: "Please key in name" });
+                                return;
+                              }
+                              handleEdit(name, "name");
+                            }}
+                          >
+                            Edit
+                          </button>
+                          <button className="btn modal-close waves-effect waves-light green darken-2 mt-3 mx-3 ">
+                            Cancel
+                          </button>
+                        </div>
                       </div>
-                      <p className="text-md m-1 p-1 text-center"> Change to </p>
-                      <div className="row items-center justify-around  max-w-lg mx-auto mt-2">
-                        <p className="col s2 text-black items-center justify-around text-md">
-                          {" "}
-                          New:{" "}
-                        </p>
-                        <input
-                          className="browser-default text-sm col s10 "
-                          defaultValue={userProfile.user.name}
-                          onChange={handleNameChange}
-                        />
+                      <div
+                        id={"modal" + "editOrg"}
+                        className="modal bottom-sheet"
+                      >
+                        <div className=" mx-auto p-0 flex flex-col items-center">
+                          <p className="text-md mt-3 mb-1 p-1 underline">
+                            {" "}
+                            Old Organization : {userProfile.user.organization}
+                          </p>
+                        </div>
+                        <p className="text-md m-1 p-1 text-center"> Change to </p>
+                        <div className="row items-center justify-around  max-w-lg mx-auto mt-2">
+                          <p className="col s2 text-black items-center justify-around text-md">
+                            {" "}
+                            New:{" "}
+                          </p>
+                          <input
+                            className="text-sm col s10"
+                            defaultValue={userProfile.user.organization}
+                            onChange={handleOrgChange}
+                          />
+                        </div>
+                        <div className="mx-auto items-center justify-center flex mb-2 pb-2">
+                          <button
+                            className="btn modal-close waves-effect waves-light blue darken-3 mt-3 mx-3"
+                            onClick={() => {
+                              if (!organization) {
+                                M.toast({ html: "Please key in organization" });
+                                return;
+                              }
+                              handleEdit(organization, "organization");
+                            }}
+                          >
+                            Edit
+                          </button>
+                          <button className="btn modal-close waves-effect waves-light green darken-2 mt-3 mx-3 ">
+                            Cancel
+                          </button>
+                        </div>
                       </div>
-                      <div className="mx-auto items-center justify-center flex mb-2 pb-2">
-                        <button
-                          className="btn modal-close waves-effect waves-light blue darken-3 mt-3 mx-3"
-                          onClick={() => {
-                            if (!name) {
-                              M.toast({ html: "Please key in name" });
-                              return;
-                            }
-                            handleEdit(name, "name");
-                          }}
-                        >
-                          Edit
-                        </button>
-                        <button className="btn modal-close waves-effect waves-light green darken-2 mt-3 mx-3 ">
-                          Cancel
-                        </button>
+                      <div
+                        id={"modal" + "editTitle"}
+                        className="modal bottom-sheet"
+                      >
+                        <div className=" mx-auto p-0 flex flex-col items-center">
+                          <p className="text-md mt-3 mb-1 p-1 underline">
+                            {" "}
+                            Old Title : {userProfile.user.title}
+                          </p>
+                        </div>
+                        <p className="text-md m-1 p-1 text-center"> Change to </p>
+                        <div className="row items-center justify-around  max-w-lg mx-auto mt-2">
+                          <p className="col s2 text-black items-center justify-around text-md">
+                            {" "}
+                            New:{" "}
+                          </p>
+                          <input
+                            className="text-sm col s10"
+                            defaultValue={userProfile.user.title}
+                            onChange={handleTitleChange}
+                          />
+                        </div>
+                        <div className="mx-auto items-center justify-center flex mb-2 pb-2">
+                          <button
+                            className="btn modal-close waves-effect waves-light blue darken-3 mt-3 mx-3"
+                            onClick={() => {
+                              if (!title) {
+                                M.toast({ html: "Please key in Title" });
+                                return;
+                              }
+                              handleEdit(title, "title");
+                            }}
+                          >
+                            Edit
+                          </button>
+                          <button className="btn modal-close waves-effect waves-light green darken-2 mt-3 mx-3 ">
+                            Cancel
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                    <div
-                      id={"modal" + "editOrg"}
-                      className="modal bottom-sheet"
-                    >
-                      <div className=" mx-auto p-0 flex flex-col items-center">
-                        <p className="text-md mt-3 mb-1 p-1 underline">
-                          {" "}
-                          Old Organization : {userProfile.user.organization}
-                        </p>
-                      </div>
-                      <p className="text-md m-1 p-1 text-center"> Change to </p>
-                      <div className="row items-center justify-around  max-w-lg mx-auto mt-2">
-                        <p className="col s2 text-black items-center justify-around text-md">
-                          {" "}
-                          New:{" "}
-                        </p>
-                        <input
-                          className="text-sm col s10"
-                          defaultValue={userProfile.user.organization}
-                          onChange={handleOrgChange}
-                        />
-                      </div>
-                      <div className="mx-auto items-center justify-center flex mb-2 pb-2">
-                        <button
-                          className="btn modal-close waves-effect waves-light blue darken-3 mt-3 mx-3"
-                          onClick={() => {
-                            if (!organization) {
-                              M.toast({ html: "Please key in organization" });
-                              return;
-                            }
-                            handleEdit(organization, "organization");
-                          }}
-                        >
-                          Edit
-                        </button>
-                        <button className="btn modal-close waves-effect waves-light green darken-2 mt-3 mx-3 ">
-                          Cancel
-                        </button>
-                      </div>
-                    </div>
-                    <div
-                      id={"modal" + "editTitle"}
-                      className="modal bottom-sheet"
-                    >
-                      <div className=" mx-auto p-0 flex flex-col items-center">
-                        <p className="text-md mt-3 mb-1 p-1 underline">
-                          {" "}
-                          Old Title : {userProfile.user.title}
-                        </p>
-                      </div>
-                      <p className="text-md m-1 p-1 text-center"> Change to </p>
-                      <div className="row items-center justify-around  max-w-lg mx-auto mt-2">
-                        <p className="col s2 text-black items-center justify-around text-md">
-                          {" "}
-                          New:{" "}
-                        </p>
-                        <input
-                          className="text-sm col s10"
-                          defaultValue={userProfile.user.title}
-                          onChange={handleTitleChange}
-                        />
-                      </div>
-                      <div className="mx-auto items-center justify-center flex mb-2 pb-2">
-                        <button
-                          className="btn modal-close waves-effect waves-light blue darken-3 mt-3 mx-3"
-                          onClick={() => {
-                            if (!title) {
-                              M.toast({ html: "Please key in Title" });
-                              return;
-                            }
-                            handleEdit(title, "title");
-                          }}
-                        >
-                          Edit
-                        </button>
-                        <button className="btn modal-close waves-effect waves-light green darken-2 mt-3 mx-3 ">
-                          Cancel
-                        </button>
-                      </div>
-                    </div>
-                  </>
-                )}
-                {/* <div className="grid grid-cols-3 items-center justify-around my-auto px-3">
+                    </>
+                  )}
+                  {/* <div className="grid grid-cols-3 items-center justify-around my-auto px-3">
                   <div key="getVCard">
                     <GetVCard userProfile={userProfile} />
                   </div>
@@ -349,47 +357,48 @@ const UserProfile = () => {
                     <button className="btn waves-effect rounded-full waves-light green darken-3 "></button>
                   </div>
                 </div> */}
-                <UserContact
+                  <UserContact
+                    userProfile={userProfile}
+                    token={token}
+                    setProfile={setProfile}
+                  />
+                </div>
+                <ProfileNotes
                   userProfile={userProfile}
                   token={token}
                   setProfile={setProfile}
                 />
+                <div>
+                  <ShowQR />
+                </div>
+
+                <CreateLink userProfile={userProfile} token={token} />
+                <div className="border-b-2  border-skin-base w-11/12 mx-auto"></div>
+                <br></br>
+
+                <ProfileSocials userProfile={userProfile} token={token} />
+                <br></br>
+                <div className="border-b-2 border-skin-base w-11/12 mx-auto"></div>
+                <br></br>
+                <br></br>
+                <>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+
+                  <HorizontalCard />
+
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                </>
               </div>
-              <ProfileNotes
-                userProfile={userProfile}
-                token={token}
-                setProfile={setProfile}
-              />
-              <div>
-                <ShowQR />
-              </div>
-
-              <CreateLink userProfile={userProfile} token={token} />
-              <div className="border-b-2  border-skin-base w-11/12 mx-auto"></div>
-              <br></br>
-
-              <ProfileSocials userProfile={userProfile} token={token} />
-              <br></br>
-              <div className="border-b-2 border-skin-base w-11/12 mx-auto"></div>
-              <br></br>
-              <br></br>
-              <>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-
-                <HorizontalCard />
-
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-              </>
             </div>
-          </div>
+          </>
         ) : (
           <EmailActivation
             userProfile={userProfile}
