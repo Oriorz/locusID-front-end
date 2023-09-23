@@ -20,6 +20,7 @@ import UploadImage from "./components/screens/UploadImage";
 import NewUploadImage from "./components/screens/NewUploadImage";
 import Faq from "./components/screens/Faq";
 import ContactUs from "./components/screens/ContactUs";
+import InformedEmailSent from "./components/screens/InformedEmailSent";
 
 export const UserContext = createContext();
 
@@ -50,6 +51,7 @@ const Routing = () => {
         <Route path="/setup/:token" element={<FirstTimeSetup />} />
         <Route path="/faq" element={<Faq />} />
         <Route path="/contactus" element={<ContactUs />} />
+        <Route path="/checkyouremail" element={<InformedEmailSent />} />
 
         {/* this is private */}
         <Route path="/adminsignup" element={<AdminSignup />} />

@@ -1,5 +1,6 @@
 import React from "react";
 import M from "materialize-css";
+import { useNavigate } from "react-router-dom";
 
 //GoRegistration(event): This function is called when the "Bind" button is clicked. It handles the form submission for email activation. It performs the following tasks:
 //Validates the entered email format using a regular expression.
@@ -14,6 +15,7 @@ function EmailActivation({
   setPassword,
   userid,
 }) {
+  const navigate = useNavigate();
   const GoRegistration = (event) => {
     event.preventDefault();
     if (
@@ -23,7 +25,8 @@ function EmailActivation({
     ) {
       return M.toast({ html: "invalid email", classes: "red darken-3" });
     }
-    M.toast({ html: `user profile id is ${userProfile.user._id} ${userid}` });
+    /* M.toast({ html: `user profile id is ${userProfile.user._id} ${userid}` }); */
+
     fetch("/api/bind-email", {
       method: "post",
       headers: {
@@ -35,8 +38,20 @@ function EmailActivation({
         email,
       }),
     })
-      .then((res) => res.json())
-      .then((result) => console.log(result));
+      .then((res) => {
+        /* console.log("response from backend /api/bind-email", res) */
+        res.json()
+      })
+      .then((result) => { /* 
+        console.log("before navigate") 
+        navigate("/checkyouremail")
+        console.log("after navigate")  */
+      })
+      .catch((error) => {
+        // Handle other errors (e.g., network errors)
+        console.error("Fetch error:", error);
+      })
+      navigate("/checkyouremail")
     //navigate(`/setup/${userid}/${password}`)
   };
   return (
@@ -60,7 +75,7 @@ function EmailActivation({
                   <label className="active" for="email" >
                     Email
                   </label>
-                  <span class="helper-text" data-error="wrong format, example: xxx@gmail.com" data-success="right"></span>
+                  <span class="helper-text" data-error="wrong format, example: xxx@gmail.com" data-success="correct email format"></span>
                 </div>
               </div>
               <div className="row">
