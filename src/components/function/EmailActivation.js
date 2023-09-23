@@ -16,6 +16,11 @@ function EmailActivation({
   userid,
 }) {
   const navigate = useNavigate();
+
+  
+  const handleEmailChange = (e) => {
+    setEmail(String(e).toLowerCase())
+  }
   const GoRegistration = (event) => {
     event.preventDefault();
     if (
@@ -70,7 +75,7 @@ function EmailActivation({
                     type="email"
                     placeholder="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => handleEmailChange(e.target.value)}
                   />
                   <label className="active" for="email" >
                     Email

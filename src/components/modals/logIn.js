@@ -13,6 +13,10 @@ export const LogIn = ({ showModal, setShowModal, setToken }) => {
     PostLoginData({password, email})
   } */
 
+  const handleEmailChange = (e) => {
+    setEmail(String(e).toLowerCase())
+  }
+
   const PostData = () => {
     if (
       !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
@@ -113,7 +117,7 @@ export const LogIn = ({ showModal, setShowModal, setToken }) => {
                     type="text"
                     placeholder="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => handleEmailChange(e.target.value)}
                   />
                   <input
                     type="password"
