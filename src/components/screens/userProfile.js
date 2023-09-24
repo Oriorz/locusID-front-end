@@ -388,7 +388,7 @@ const UserProfile = () => {
                   <br></br>
                   <br></br>
 
-                  <HorizontalCard />
+                  {/* <HorizontalCard /> */}
 
                   <br></br>
                   <br></br>

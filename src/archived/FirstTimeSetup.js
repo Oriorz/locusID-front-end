@@ -15,7 +15,7 @@ const FirstTimeSetup = () => {
       },
       body: JSON.stringify({
         token,
-        name,
+        /* name, */
         password,
       }),
     })
@@ -27,15 +27,17 @@ const FirstTimeSetup = () => {
   };
 
   return (
+    <>
+    <div className="mycard auth-card font-rubikdirt text-[70px] mt-3 py-1">iTap </div>
     <div className="mycard">
       <div className="card auth-card input-field">
-        <h2>Set Account Password</h2>
-        <input
+        <h2 className="text-2xl">Setup New Password</h2>
+        {/* <input
           type="text"
           placeholder="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-        />
+        /> */}
         <input
           type="password"
           placeholder="password"
@@ -52,6 +54,7 @@ const FirstTimeSetup = () => {
         </button>
       </div>
     </div>
+    </>
   );
 };
 

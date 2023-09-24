@@ -48,7 +48,7 @@ export const InputProfile = ({ userProfile, token }) => {
             },
             body: JSON.stringify({
               pic: data.pic,
-              oldpic: getFileName(state.pic),
+              oldpic: state.pic ? getFileName(state.pic) : "null",
             }),
           })
             .then((res) => res.json())

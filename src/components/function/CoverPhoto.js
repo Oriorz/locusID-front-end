@@ -72,6 +72,7 @@ const CoverPhoto = ({ token, userProfile }) => {
   }, [finalImage]);
 
   const getFileName = (text) => {
+    console.log("entered getFileName")
     const theString = text;
     const theStringLength = theString.split("/").length;
     const theSuffix = theString.split("/")[theStringLength - 1].split(".")[0];
@@ -204,7 +205,7 @@ const CoverPhoto = ({ token, userProfile }) => {
 
           <img src={coverPic} className="w-[1080px] object-cover overflow-hidden" onClick={handleCoverPhotoClick} />
           :
-          <img src="../images/wechat.png" className="w-[1080px] object-cover overflow-hidden" onClick={handleCoverPhotoClick} />
+          <div  className="w-[1080px] z-30 bg-blue-500" onClick={handleCoverPhotoClick} ></div>
 
         }
         {image ? (
