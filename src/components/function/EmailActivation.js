@@ -17,11 +17,11 @@ function EmailActivation({
 }) {
   const navigate = useNavigate();
 
-  
+
   const handleEmailChange = (e) => {
     setEmail(String(e).toLowerCase())
   }
-  const GoRegistration = (event) => {
+  const GoRegistration = async (event) => {
     event.preventDefault();
     if (
       !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
@@ -30,34 +30,36 @@ function EmailActivation({
     ) {
       return M.toast({ html: "invalid email", classes: "red darken-3" });
     }
-    /* M.toast({ html: `user profile id is ${userProfile.user._id} ${userid}` }); */
 
-    fetch("/api/bind-email", {
-      method: "post",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        userid: userid,
-        password,
-        email,
-      }),
-    })
-      .then((res) => {
-        /* console.log("response from backend /api/bind-email", res) */
-        res.json()
-      })
-      .then((result) => { /* 
-        console.log("before navigate") 
-        navigate("/checkyouremail")
-        console.log("after navigate")  */
-      })
-      .catch((error) => {
-        // Handle other errors (e.g., network errors)
-        console.error("Fetch error:", error);
-      })
-      navigate("/checkyouremail")
-    //navigate(`/setup/${userid}/${password}`)
+    try {
+      M.toast({ html: "Sending Email to your Inbox, don't close this page", classes: "green darken-1" })
+      const response = await fetch("/api/bind-email", {
+        method: "post",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          userid: userid,
+          password,
+          email,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Fetch error from bind-email: ${response.statusText}`);
+      }
+      const result = await response.json();
+      /* console.log("before navigate ", result); */
+      navigate("/checkyouremail");
+      /* console.log("after navigate"); */
+
+    } catch (error) {
+      // Handle other errors (e.g., network errors)
+      //const errormessage = await error.json()
+      M.toast({ html: `password is not correct or user already registered`, classes: "red darken-3" });
+      console.error("Error in GoRegistration:", error);
+    }
+
   };
   return (
     <>
@@ -65,55 +67,68 @@ function EmailActivation({
       <div className="mycard  ">
         <div className="card auth-card input-field  ">
           <h2 className="text-xl">Email Activation</h2>
-
-          <div className="row">
-            <form className="col s12">
+          {Date.parse(userProfile.user.cooldownToken) > Date.now() ?
+            <>
               <div className="row">
-                <div className="input-field col s12">
-                  <input
-                    className="validate"
-                    type="email"
-                    placeholder="email"
-                    value={email}
-                    onChange={(e) => handleEmailChange(e.target.value)}
-                  />
-                  <label className="active" for="email" >
-                    Email
-                  </label>
-                  <span class="helper-text" data-error="wrong format, example: xxx@gmail.com" data-success="correct email format"></span>
+                <div className="row"></div>
+                <p>An Email has been sent to your Inbox, depends on the network condition, it may be delayed. Please check you Inbox or the spam folder to look for the Activation Email</p>
+                <br></br>
+                <div></div>
+                <br></br>
+                <div>Or you may request for another Activation Email after 2 mins</div>
+              </div>
+            </>
+            :
+            <>
+              <div className="row">
+                <form className="col s12">
+                  <div className="row">
+                    <div className="input-field col s12">
+                      <input
+                        className="validate"
+                        type="email"
+                        placeholder="email"
+                        value={email}
+                        onChange={(e) => handleEmailChange(e.target.value)}
+                      />
+                      <label className="active" htmlFor="email" >
+                        Email
+                      </label>
+                      <span className="helper-text" data-error="wrong format, example: xxx@gmail.com" data-success="correct email format"></span>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="input-field col s12">
+                      <input
+                        type="password"
+                        placeholder="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                      <label className="active" htmlFor="password">
+                        Password from Card Cover
+                      </label>
+                    </div>
+                  </div>
+                </form>
+                <div className="notes">
+                  <p>Notes:</p>
+                  <p>
+                    An email containing a link for activation will be sent to the
+                    email address provided above for the purpose of binding the
+                    account. Please click on the link in the email to complete the
+                    activation process.
+                  </p>
                 </div>
               </div>
-              <div className="row">
-                <div className="input-field col s12">
-                  <input
-                    type="password"
-                    placeholder="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <label className="active" for="password">
-                    Password from Card Cover
-                  </label>
-                </div>
-              </div>
-            </form>
-            <div className="notes">
-              <p>Notes:</p>
-              <p>
-                An email containing a link for activation will be sent to the
-                email address provided above for the purpose of binding the
-                account. Please click on the link in the email to complete the
-                activation process.
-              </p>
-            </div>
-          </div>
-          <button
-            className="btn waves-effect waves-light blue darken-2"
-            onClick={GoRegistration}
-          >
-            Bind
-          </button>
-          {console.log(userProfile.user)}
+              <button
+                className="btn waves-effect waves-light blue darken-2"
+                onClick={GoRegistration}
+              >
+                Bind
+              </button>
+            </>
+          }
         </div>
       </div>
     </>

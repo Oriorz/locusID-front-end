@@ -197,8 +197,8 @@ export const InputProfile = ({ userProfile, token }) => {
             <img
               /* className="w-52 h-52 rounded-full relative z-50" */
               className="w-52 h-52 rounded-full absolute top-36  z-40 border-2 border-solid border-skin-base "
-              src={userProfile.user.pic}
-              alt="user_pic"
+              src={userProfile.user.pic? userProfile.user.pic : '/images/name.jpg'}
+              /* alt="user_pic" */
               onClick={onInputClick}
             />
             <div
@@ -213,8 +213,8 @@ export const InputProfile = ({ userProfile, token }) => {
           :
           <img
             className="w-52 h-52 rounded-full  absolute top-36 z-40 border-2 border-solid border-skin-base "
-            src={userProfile.user.pic}
-            alt="user_pic"
+            src={userProfile.user.pic? userProfile.user.pic : '/images/name.jpg'}
+            /* alt="user_pic" */
             onClick={onInputClick}
           />
 

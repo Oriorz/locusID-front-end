@@ -201,12 +201,13 @@ const CoverPhoto = ({ token, userProfile }) => {
     <>
       <div className="w-full h-60 bg-skin-fill  z-20 flex flex-col items-center justify-center">
         <InputProfile userProfile={userProfile} token={token} />
+        {/* <div  className="w-[1080px] z-30 bg-blue-500" onClick={handleCoverPhotoClick} ></div> */ }
         {coverPic ?
 
           <img src={coverPic} className="w-[1080px] object-cover overflow-hidden" onClick={handleCoverPhotoClick} />
           :
-          <div  className="w-[1080px] z-30 bg-blue-500" onClick={handleCoverPhotoClick} ></div>
-
+          
+          < img src='/images/blue.png' className="w-[1080px] object-cover overflow-hidden" onClick={handleCoverPhotoClick} />
         }
         {image ? (
           <div className="flex flex-row items-center justify-center absolute">

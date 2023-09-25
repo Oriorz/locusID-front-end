@@ -49,6 +49,7 @@ const UserProfile = () => {
     "theme-yellow",
   ];
   useEffect(() => {
+
     const userToken = getToken();
     setToken(userToken);
   }, []);
@@ -126,6 +127,10 @@ const UserProfile = () => {
       .then((result) => {
         setProfile(result);
         //pending setTheme
+        /* if (result.user.firsttime) {
+          localStorage.clear();
+
+        } */
         if (result.user.theme) {
           setTheme(result.user.theme);
         }
