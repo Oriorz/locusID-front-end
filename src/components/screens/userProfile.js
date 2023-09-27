@@ -20,6 +20,7 @@ import HorizontalCard from "../function/HorizontalCard";
 import NameTag from "../function/NameTag";
 import CoverPhoto from "../function/CoverPhoto";
 import UserContact from "../function/UserContact";
+import { ProfileSales } from "../function/ProfileSales";
 //const { copyLink } = require("../copyLink");
 //var fs = require('fs');
 
@@ -181,6 +182,7 @@ const UserProfile = () => {
               setTheme={setTheme}
               theme={theme}
               setProfile={setProfile}
+              userProfile={userProfile}
             />
             <div /* className="flex flex-col justify-center items-center" */>
               <CoverPhoto token={token} userProfile={userProfile} />
@@ -383,8 +385,9 @@ const UserProfile = () => {
 
                 <ProfileSocials userProfile={userProfile} token={token} />
                 <br></br>
-                <div className="border-b-2 border-skin-base w-11/12 mx-auto"></div>
+                {/* <div className="border-b-2 border-skin-base w-11/12 mx-auto"></div> */}
                 <br></br>
+                <ProfileSales userProfile={userProfile} token={token}  />
                 <br></br>
                 <>
                   <br></br>

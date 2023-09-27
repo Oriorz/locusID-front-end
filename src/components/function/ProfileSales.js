@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import M from "materialize-css";
-import { socials, patterns } from "../namelist";
+import { socials, sales } from "../namelist";
 import CopyLink from "./copyLink";
 
-export const ProfileSocials = ({ userProfile, token }) => {
+export const ProfileSales = ({ userProfile, token }) => {
   const [selectedApp, setSelectedApp] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [app, setApp] = useState("");
@@ -18,7 +18,7 @@ export const ProfileSocials = ({ userProfile, token }) => {
 
   useEffect(() => {
     if (app) {
-      const selectedSocialObj = socials.find((social) => social.value === app);
+      const selectedSocialObj = sales.find((social) => social.value === app);
       setLink(selectedSocialObj ? selectedSocialObj.link : "");
       setExample(selectedSocialObj ? selectedSocialObj.example : "");
       setIsUrl(selectedSocialObj ? selectedSocialObj.isUrl : "");
@@ -32,7 +32,7 @@ export const ProfileSocials = ({ userProfile, token }) => {
   const handleChange = (event) => {
     setApp(event.target.value);
     /* console.log(event.target.value) */
-    /* const selectedSocialObj = socials.find((social) => social.value === event.target.value);
+    /* const selectedSocialObj = sales.find((social) => social.value === event.target.value);
     setLink(selectedSocialObj ? selectedSocialObj.link : ''); */
     setName("");
   };
@@ -57,15 +57,15 @@ export const ProfileSocials = ({ userProfile, token }) => {
 
   const handleCreate = () => {
     const fullLink =
-      link.toLowerCase() + name.toLowerCase().replaceAll(" ", "");
-    fetch(`/createsocials`, {
+      link + name.replaceAll(" ", "");
+    fetch(`/createsales`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
       body: JSON.stringify({
-        socials: {
+        sales: {
           app,
           name: name,
           link: fullLink,
@@ -75,7 +75,7 @@ export const ProfileSocials = ({ userProfile, token }) => {
       .then((res) => res.json())
       .then((result) => {
         setProfile(result);
-        console.log("createlink result is ", result);
+        console.log("create sales result is ", result);
         window.location.reload();
       });
   };
@@ -85,14 +85,14 @@ export const ProfileSocials = ({ userProfile, token }) => {
       alert("not signed in");
       return;
     }
-    fetch(`/deletesocials`, {
+    fetch(`/deletesales`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
       body: JSON.stringify({
-        socials: {
+        sales: {
           _id,
         },
       }),
@@ -100,7 +100,7 @@ export const ProfileSocials = ({ userProfile, token }) => {
       .then((res) => res.json())
       .then((result) => {
         setProfile(result);
-        console.log("deletesocials result is ", result);
+        console.log("delete sales result is ", result);
       });
   };
 
@@ -111,17 +111,17 @@ export const ProfileSocials = ({ userProfile, token }) => {
     }
     //sanitize link : remove "https://" and lowercase it
     const httpsLink =
-      link.toLowerCase() + name.toLowerCase().replaceAll(" ", "");
+      link + name.replaceAll(" ", "");
     console.log("httpsLink : ", httpsLink);
     /* const cleanLink = httpsLink.replace(/^https?:\/\//, '') */
-    fetch(`/editsocials`, {
+    fetch(`/editsales`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
       body: JSON.stringify({
-        socials: {
+        sales: {
           app,
           name,
           link: httpsLink,
@@ -132,7 +132,7 @@ export const ProfileSocials = ({ userProfile, token }) => {
       .then((res) => res.json())
       .then((result) => {
         setProfile(result);
-        console.log("editlink result is ", result);
+        console.log("edit sales result is ", result);
         window.location.reload();
       });
   };
@@ -167,8 +167,8 @@ export const ProfileSocials = ({ userProfile, token }) => {
   return (
     <div className="social ">
       <div className=" grid w-11/12 my-0 mx-auto grid-cols-4 sm:grid-cols-4 md:grid-cols-5 gap-5">
-        {profile.socials
-          ? profile.socials.map((item) => {
+        {profile.sales
+          ? profile.sales.map((item) => {
             return (
               <div className="collection-item" key={item._id + "_key"}>
                 <div
@@ -270,11 +270,11 @@ export const ProfileSocials = ({ userProfile, token }) => {
                       </div>
                       <p className="text-lg underline text-black">
                         {" "}
-                        Edit or Delete Socials :{" "}
+                        Edit or Delete sales :{" "}
                       </p>
                       <Dropdown1
-                        label="Select Socials"
-                        options={socials}
+                        label="Select sales"
+                        options={sales}
                         value={app}
                         onChange={handleChange}
                       />
@@ -303,13 +303,13 @@ export const ProfileSocials = ({ userProfile, token }) => {
                         URL :{" "}
                         <a
                           className="underline text-blue-600 hover:text-blue-800 visited:text-purple-600 text-lg"
-                          href={`${link}${name.toLowerCase().trim()}`}
+                          href={`${link}${name.trim()}`}
                           rel="noopener noreferrer"
                           target="_blank"
                         >
                           {" "}
                           {link}
-                          {name.toLowerCase().trim()}
+                          {name.trim()}
                         </a>
                       </div>
                       {isUrl ? (
@@ -380,7 +380,7 @@ export const ProfileSocials = ({ userProfile, token }) => {
             <div className="collection-item" key={"gg" + "_key"}>
               <div
                 className="modal-trigger plus flex justify-center rotating-border rotating-border--rainbow"
-                href={"#modalplus"}
+                href={"#modalplussales"}
                 onClick={() => {
                   setIsModalOpen(true);
                   /* editRef.current.scrollIntoView({ behavior: "smooth" }); */
@@ -402,13 +402,13 @@ export const ProfileSocials = ({ userProfile, token }) => {
                 />
               </div>
               {/* this part is the modal for "ADD" sign */}
-              <div id={"modalplus"} className="modal bottom-sheet">
+              <div id={"modalplussales"} className="modal bottom-sheet">
                 <div className=" mx-auto p-0">
-                  <p className="text-xl m-2 p-1"> Add Socials </p>
+                  <p className="text-xl m-2 p-1"> Add sales </p>
                   <div className="mb-4">
                     <Dropdown1
-                      label="Select Socials"
-                      options={socials}
+                      label="Select sales"
+                      options={sales}
                       value={app}
                       onChange={handleChange}
                     />
@@ -436,13 +436,13 @@ export const ProfileSocials = ({ userProfile, token }) => {
                           Your <strong>{app.toUpperCase()}</strong> profile URL :{" "}
                           <a
                             className="underline text-blue-600 hover:text-blue-800 visited:text-purple-600 text-lg"
-                            href={`${link}${name.toLowerCase().trim()}`}
+                            href={`${link}${name.trim()}`}
                             rel="noopener noreferrer"
                             target="_blank"
                           >
                             {" "}
                             {link}
-                            {name.toLowerCase().trim()}
+                            {name.trim()}
                           </a>
                         </div>
                         <div className="text-xs"> Example Profile URL: {example}</div>
@@ -492,8 +492,7 @@ export const ProfileSocials = ({ userProfile, token }) => {
           ""
         )}
       </div>
-      {profile.socials.length > 0 && <div className="border-b-2 border-skin-base w-11/12 mx-auto mt-5"></div>}
-      
+      {profile.sales.length > 0 && <div className="border-b-2 border-skin-base w-11/12 mx-auto mt-5"></div>}
       <div ref={editRef}>
         {" "}
         {/* This is dummy useRef for scrollIntoView() when the "ADD" sign clicked */}{" "}

@@ -7,8 +7,9 @@ export const FloatSignin = ({
   token,
   setToken,
   setTheme,
-  theme,
-  setProfile,
+  theme, 
+  userProfile, 
+  setProfile
 }) => {
   const [open, setopen] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -39,7 +40,7 @@ export const FloatSignin = ({
     setIsThemeChanged(true);
   };
 
-  const confirmColorChange = () => {};
+  const confirmColorChange = () => { };
 
   const handleEdit = (value, text) => {
     if (!localStorage.getItem("jwt")) {
@@ -69,7 +70,7 @@ export const FloatSignin = ({
           payload: { theKey: text, theValue: data[text] },
         });
         setIsThemeChanged(false);
-        //window.location.reload()
+        window.location.reload()
       });
   };
 
@@ -117,12 +118,10 @@ export const FloatSignin = ({
       <div className="">
         {showPurchaseTop ? (
           <button
-            className={`${
-              open &&
+            className={`${open &&
               "transform -translate-x-10 duration-150 opacity-100 visible"
-            } z-10 absolute border-2 p-3  border-emerald-800 bg-white w-50 h-10 right-32 top-3 opacity-100 flex items-center justify-center ${
-              !open && "collapse transform opacity-0 duration-200"
-            }`}
+              } z-10 absolute border-2 p-3  border-emerald-800 bg-white w-50 h-10 right-32 top-3 opacity-100 flex items-center justify-center ${!open && "collapse transform opacity-0 duration-200"
+              }`}
           >
             <p>Purchase</p>
           </button>
@@ -130,12 +129,10 @@ export const FloatSignin = ({
           ""
         )}
         <button
-          className={`${
-            open &&
+          className={`${open &&
             "transform -translate-x-10 opacity-100 visible duration-150 "
-          } z-10 absolute border-2 p-3  border-emerald-800 bg-white w-50 h-10 right-12 top-3 opacity-100 flex items-center justify-center ${
-            !open && "collapse transform opacity-0 duration-200"
-          }`}
+            } z-10 absolute border-2 p-3  border-emerald-800 bg-white w-50 h-10 right-12 top-3 opacity-100 flex items-center justify-center ${!open && "collapse transform opacity-0 duration-200"
+            }`}
           type="button"
         >
           {token ? (
@@ -148,13 +145,11 @@ export const FloatSignin = ({
         </button>
         <button
           onClick={handleClick}
-          className={`${
-            open &&
+          className={`${open &&
             "transform -rotate-45 duration-150 rounded-sm border-dotted border-gray-500 bg-white focus:bg-white "
-          }z-10 absolute border-2 p-1.5 rounded-full border-solid border-gray-500 bg-white w-10 h-10 right-3 top-3 opacity-70 ${
-            !open &&
+            }z-10 absolute border-2 p-1.5 rounded-full border-solid border-gray-500 bg-white w-10 h-10 right-3 top-3 opacity-70 ${!open &&
             "transform duration-200 rotate-90 border-solid border-gray-500 bg-white"
-          }`}
+            }`}
         >
           {open ? (
             <img
@@ -254,6 +249,8 @@ export const FloatSignin = ({
         showModal={showModal}
         setShowModal={setShowModal}
         setToken={setToken}
+        userProfile={userProfile}
+        setProfile={setProfile}
       />
     </>
   );
