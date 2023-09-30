@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import M from "materialize-css";
-import { socials, sales } from "../namelist";
+import { games, sales } from "../namelist";
 import CopyLink from "./copyLink";
 
-export const ProfileSales = ({ userProfile, token }) => {
+export const ProfileGames = ({ userProfile, token }) => {
   const [selectedApp, setSelectedApp] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [app, setApp] = useState("");
@@ -19,7 +19,7 @@ export const ProfileSales = ({ userProfile, token }) => {
 
   useEffect(() => {
     if (app) {
-      const selectedSocialObj = sales.find((social) => social.value === app);
+      const selectedSocialObj = games.find((social) => social.value === app);
       setLink(selectedSocialObj ? selectedSocialObj.link : "");
       setExample(selectedSocialObj ? selectedSocialObj.example : "");
       setIsUrl(selectedSocialObj ? selectedSocialObj.isUrl : "");
@@ -34,7 +34,7 @@ export const ProfileSales = ({ userProfile, token }) => {
   const handleChange = (event) => {
     setApp(event.target.value);
     /* console.log(event.target.value) */
-    /* const selectedSocialObj = sales.find((social) => social.value === event.target.value);
+    /* const selectedSocialObj = games.find((social) => social.value === event.target.value);
     setLink(selectedSocialObj ? selectedSocialObj.link : ''); */
     setName("");
   };
@@ -59,14 +59,14 @@ export const ProfileSales = ({ userProfile, token }) => {
 
   const handleCreate = () => {
     const fullLink = link + name.replaceAll(" ", "");
-    fetch(`/createsales`, {
+    fetch(`/creategames`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
       body: JSON.stringify({
-        sales: {
+        games: {
           app,
           name: name,
           link: fullLink,
@@ -76,7 +76,7 @@ export const ProfileSales = ({ userProfile, token }) => {
       .then((res) => res.json())
       .then((result) => {
         setProfile(result);
-        console.log("create sales result is ", result);
+        console.log("create games result is ", result);
         window.location.reload();
       });
   };
@@ -86,14 +86,14 @@ export const ProfileSales = ({ userProfile, token }) => {
       alert("not signed in");
       return;
     }
-    fetch(`/deletesales`, {
+    fetch(`/deletegames`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
       body: JSON.stringify({
-        sales: {
+        games: {
           _id,
         },
       }),
@@ -101,7 +101,7 @@ export const ProfileSales = ({ userProfile, token }) => {
       .then((res) => res.json())
       .then((result) => {
         setProfile(result);
-        console.log("delete sales result is ", result);
+        console.log("delete games result is ", result);
       });
   };
 
@@ -114,14 +114,14 @@ export const ProfileSales = ({ userProfile, token }) => {
     const httpsLink = link + name.replaceAll(" ", "");
     console.log("httpsLink : ", httpsLink);
     /* const cleanLink = httpsLink.replace(/^https?:\/\//, '') */
-    fetch(`/editsales`, {
+    fetch(`/editgames`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
       body: JSON.stringify({
-        sales: {
+        games: {
           app,
           name,
           link: httpsLink,
@@ -132,7 +132,7 @@ export const ProfileSales = ({ userProfile, token }) => {
       .then((res) => res.json())
       .then((result) => {
         setProfile(result);
-        console.log("edit sales result is ", result);
+        console.log("edit games result is ", result);
         window.location.reload();
       });
   };
@@ -166,10 +166,10 @@ export const ProfileSales = ({ userProfile, token }) => {
 
   return (
     <div className="social ">
-      {profile.sales && (
+      {profile.games && (
         <div className=" grid w-11/12 my-0 mx-auto grid-cols-4 sm:grid-cols-4 md:grid-cols-5 gap-5 mt-4">
-          {profile.sales
-            ? profile.sales.map((item) => {
+          {profile.games
+            ? profile.games.map((item) => {
                 return (
                   <div className="collection-item" key={item._id + "_key"}>
                     <div
@@ -223,26 +223,6 @@ export const ProfileSales = ({ userProfile, token }) => {
                             <CopyLink link={item.name} />
                           </>
                         )}
-                        {/* {token ? (
-                        <p className="text-xl m-2 p-1"> Edit or Delete </p>
-                      ) : (
-                        <div className="m-3 p-3">
-                          <p>Go to :</p>
-
-                          <a
-                            className="text-xl m-3 p-3 btn items-center justify-center my-auto text-center flex"
-                            href={item.link}
-                            rel="noopener noreferrer"
-                            target="_blank"
-                          >
-                            {" "}
-                            {item.name}{" "}
-                          </a>
-                          <p>
-                            This is {item.app}, {isUrl ? "TRUE" : "FALSE"}
-                          </p>
-                        </div>
-                      )} */}
                       </div>
 
                       {token && (
@@ -278,11 +258,11 @@ export const ProfileSales = ({ userProfile, token }) => {
                           </div>
                           <p className="text-lg underline text-black">
                             {" "}
-                            Edit or Delete sales :{" "}
+                            Edit or Delete games :{" "}
                           </p>
                           <Dropdown1
-                            label="Select sales"
-                            options={sales}
+                            label="Select games"
+                            options={games}
                             value={app}
                             onChange={handleChange}
                           />
@@ -388,7 +368,7 @@ export const ProfileSales = ({ userProfile, token }) => {
               <div className="collection-item" key={"gg" + "_key"}>
                 <div
                   className="modal-trigger plus flex justify-center rotating-border rotating-border--rainbow"
-                  href={"#modalplussales"}
+                  href={"#modalplusgames"}
                   onClick={() => {
                     setIsModalOpen(true);
                     /* editRef.current.scrollIntoView({ behavior: "smooth" }); */
@@ -399,7 +379,7 @@ export const ProfileSales = ({ userProfile, token }) => {
                     key={"plus" + "_img"}
                     className="circle   border-skin-base shadow-md shadow-skin "
                     style={{ borderWidth: 1 }}
-                    src="../images/plussales.png"
+                    src="../images/plusgames.png"
                     alt="plus"
                     onClick={() => {
                       setApp("");
@@ -410,13 +390,13 @@ export const ProfileSales = ({ userProfile, token }) => {
                   />
                 </div>
                 {/* this part is the modal for "ADD" sign */}
-                <div id={"modalplussales"} className="modal bottom-sheet">
+                <div id={"modalplusgames"} className="modal bottom-sheet">
                   <div className=" mx-auto p-0">
-                    <p className="text-xl m-2 p-1"> Add sales </p>
+                    <p className="text-xl m-2 p-1"> Add games </p>
                     <div className="mb-4">
                       <Dropdown1
-                        label="Select sales"
-                        options={sales}
+                        label="Select games"
+                        options={games}
                         value={app}
                         onChange={handleChange}
                       />
@@ -509,7 +489,7 @@ export const ProfileSales = ({ userProfile, token }) => {
         </div>
       )}
 
-      {profile.sales?.length > 0 && (
+      {profile.games?.length > 0 && (
         <div className="border-b-2 border-skin-base w-11/12 mx-auto mt-5"></div>
       )}
       <div ref={editRef}>

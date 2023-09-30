@@ -21,6 +21,7 @@ import NameTag from "../function/NameTag";
 import CoverPhoto from "../function/CoverPhoto";
 import UserContact from "../function/UserContact";
 import { ProfileSales } from "../function/ProfileSales";
+import { ProfileGames } from "../function/ProfileGames";
 //const { copyLink } = require("../copyLink");
 //var fs = require('fs');
 
@@ -50,7 +51,6 @@ const UserProfile = () => {
     "theme-yellow",
   ];
   useEffect(() => {
-
     const userToken = getToken();
     setToken(userToken);
   }, []);
@@ -239,7 +239,10 @@ const UserProfile = () => {
                             Old Name : {userProfile.user.name}
                           </p>
                         </div>
-                        <p className="text-md m-1 p-1 text-center"> Change to </p>
+                        <p className="text-md m-1 p-1 text-center">
+                          {" "}
+                          Change to{" "}
+                        </p>
                         <div className="row items-center justify-around  max-w-lg mx-auto mt-2">
                           <p className="col s2 text-black items-center justify-around text-md">
                             {" "}
@@ -279,7 +282,10 @@ const UserProfile = () => {
                             Old Organization : {userProfile.user.organization}
                           </p>
                         </div>
-                        <p className="text-md m-1 p-1 text-center"> Change to </p>
+                        <p className="text-md m-1 p-1 text-center">
+                          {" "}
+                          Change to{" "}
+                        </p>
                         <div className="row items-center justify-around  max-w-lg mx-auto mt-2">
                           <p className="col s2 text-black items-center justify-around text-md">
                             {" "}
@@ -319,7 +325,10 @@ const UserProfile = () => {
                             Old Title : {userProfile.user.title}
                           </p>
                         </div>
-                        <p className="text-md m-1 p-1 text-center"> Change to </p>
+                        <p className="text-md m-1 p-1 text-center">
+                          {" "}
+                          Change to{" "}
+                        </p>
                         <div className="row items-center justify-around  max-w-lg mx-auto mt-2">
                           <p className="col s2 text-black items-center justify-around text-md">
                             {" "}
@@ -381,14 +390,14 @@ const UserProfile = () => {
 
                 <CreateLink userProfile={userProfile} token={token} />
                 <div className="border-b-2  border-skin-base w-11/12 mx-auto"></div>
-                <br></br>
 
                 <ProfileSocials userProfile={userProfile} token={token} />
-                <br></br>
+
                 {/* <div className="border-b-2 border-skin-base w-11/12 mx-auto"></div> */}
-                <br></br>
-                <ProfileSales userProfile={userProfile} token={token}  />
-                <br></br>
+
+                <ProfileSales userProfile={userProfile} token={token} />
+
+                <ProfileGames userProfile={userProfile} token={token} />
                 <>
                   <br></br>
                   <br></br>

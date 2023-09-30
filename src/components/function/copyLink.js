@@ -1,17 +1,26 @@
 import { useRef, useState } from "react";
 
 function CopyLink({ link }) {
-  const handleCopy = (text) => {
+  const handleCopy = async (text) => {
     if (text) {
-      navigator.clipboard.writeText(text);
+      await navigator.clipboard.writeText(text);
     } else {
-      navigator.clipboard.writeText("no copied text");
+      await navigator.clipboard.writeText("no copied text");
     }
   };
+
   return (
-    <>
-      <button onClick={() => handleCopy(link)}>Copy</button>
-    </>
+    <div className="my-3 flex flex-row items-center justify-center mx-auto px-auto">
+      <div className="col s2 mx-2">{link?.toString()}</div>
+      <button
+        className="col s6 w-16 h-6 bg-blue-300  mx-2 text-xs"
+        onClick={() => {
+          handleCopy(link?.toString());
+        }}
+      >
+        Copy
+      </button>
+    </div>
   );
 }
 
