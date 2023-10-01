@@ -59,7 +59,7 @@ export const ProfileGames = ({ userProfile, token }) => {
 
   const handleCreate = () => {
     const fullLink = link + name.replaceAll(" ", "");
-    fetch(`/creategames`, {
+    fetch(`/api/creategames`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -86,7 +86,7 @@ export const ProfileGames = ({ userProfile, token }) => {
       alert("not signed in");
       return;
     }
-    fetch(`/deletegames`, {
+    fetch(`/api/deletegames`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -114,7 +114,7 @@ export const ProfileGames = ({ userProfile, token }) => {
     const httpsLink = link + name.replaceAll(" ", "");
     console.log("httpsLink : ", httpsLink);
     /* const cleanLink = httpsLink.replace(/^https?:\/\//, '') */
-    fetch(`/editgames`, {
+    fetch(`/api/editgames`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

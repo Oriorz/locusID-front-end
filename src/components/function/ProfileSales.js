@@ -59,7 +59,7 @@ export const ProfileSales = ({ userProfile, token }) => {
 
   const handleCreate = () => {
     const fullLink = link + name.replaceAll(" ", "");
-    fetch(`/createsales`, {
+    fetch(`/api/createsales`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -86,7 +86,7 @@ export const ProfileSales = ({ userProfile, token }) => {
       alert("not signed in");
       return;
     }
-    fetch(`/deletesales`, {
+    fetch(`/api/deletesales`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -114,7 +114,7 @@ export const ProfileSales = ({ userProfile, token }) => {
     const httpsLink = link + name.replaceAll(" ", "");
     console.log("httpsLink : ", httpsLink);
     /* const cleanLink = httpsLink.replace(/^https?:\/\//, '') */
-    fetch(`/editsales`, {
+    fetch(`/api/editsales`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

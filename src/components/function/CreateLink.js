@@ -13,7 +13,7 @@ export const CreateLink = ({ userProfile, token }) => {
     //sanitize link : remove "https://" and lowercase it
     const httpsLink = link.toLowerCase();
     const cleanLink = httpsLink.replace(/^https?:\/\//, "");
-    fetch(`/createlink`, {
+    fetch(`/api/createlink`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -39,7 +39,7 @@ export const CreateLink = ({ userProfile, token }) => {
       alert("not signed in");
       return;
     }
-    fetch(`/deletelink`, {
+    fetch(`/api/deletelink`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -69,7 +69,7 @@ export const CreateLink = ({ userProfile, token }) => {
     //sanitize link : remove "https://" and lowercase it
     const httpsLink = link.toLowerCase();
     const cleanLink = httpsLink.replace(/^https?:\/\//, "");
-    fetch(`/editlink`, {
+    fetch(`/api/editlink`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

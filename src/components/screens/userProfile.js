@@ -82,7 +82,7 @@ const UserProfile = () => {
       alert("not signed in");
       return;
     }
-    fetch(`/updatedetails/${text}`, {
+    fetch(`/api/updatedetails/${text}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

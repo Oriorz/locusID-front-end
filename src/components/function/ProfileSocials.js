@@ -60,7 +60,7 @@ export const ProfileSocials = ({ userProfile, token }) => {
   const handleCreate = () => {
     const fullLink =
       link.toLowerCase() + name.toLowerCase().replaceAll(" ", "");
-    fetch(`/createsocials`, {
+    fetch(`/api/createsocials`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -87,7 +87,7 @@ export const ProfileSocials = ({ userProfile, token }) => {
       alert("not signed in");
       return;
     }
-    fetch(`/deletesocials`, {
+    fetch(`/api/deletesocials`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -116,7 +116,7 @@ export const ProfileSocials = ({ userProfile, token }) => {
       link.toLowerCase() + name.toLowerCase().replaceAll(" ", "");
     console.log("httpsLink : ", httpsLink);
     /* const cleanLink = httpsLink.replace(/^https?:\/\//, '') */
-    fetch(`/editsocials`, {
+    fetch(`/api/editsocials`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

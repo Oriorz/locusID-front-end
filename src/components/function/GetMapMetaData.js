@@ -1,38 +1,38 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 
-export const GetMapMetaData = ({ url = "https://goo.gl/maps/UkvXjMbZ3fD84QeG9" }) => {
-  const [mapUrl, setMapUrl] = useState("")
-  const placeId = "ChIJeRpOeF67j4AR9ydy_PIzPuM"
+export const GetMapMetaData = ({
+  url = "https://goo.gl/maps/UkvXjMbZ3fD84QeG9",
+}) => {
+  const [mapUrl, setMapUrl] = useState("");
+  const placeId = "ChIJeRpOeF67j4AR9ydy_PIzPuM";
   useEffect(() => {
-    fetch(`/metadata?url=${url}`, {
+    fetch(`/api/metadata?url=${url}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-      }
+      },
     })
       .then((res) => res.json())
       .then((result) => {
-        setMapUrl(result.image)
-        console.log(result)
+        setMapUrl(result.image);
+        console.log(result);
       });
 
-    return () => {
+    return () => {};
+  }, []);
 
-    }
-  }, [])
-
-  const handleClick =() =>{
-    fetch(`/get-map`, {
-      method : "GET",
-      headers : {
-        "Content-Type" : "application/json"
-      }
+  const handleClick = () => {
+    fetch(`/api/get-map`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
     })
-    .then((res) => res.json())
-    .then((result)=>{
-      console.log(result)
-    })
-  }
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+      });
+  };
 
   return (
     <>
@@ -43,8 +43,8 @@ export const GetMapMetaData = ({ url = "https://goo.gl/maps/UkvXjMbZ3fD84QeG9" }
       </div>
       <button onClick={handleClick}> Get Map </button>
       <div>
-        <img src = ""></img>
+        <img src=""></img>
       </div>
     </>
-  )
-}
+  );
+};

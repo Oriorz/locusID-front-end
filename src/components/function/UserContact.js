@@ -47,7 +47,7 @@ const UserContact = ({ userProfile, setProfile, token }) => {
       alert("not signed in");
       return;
     }
-    fetch(`/geocode?address=${value}`, {
+    fetch(`/api/geocode?address=${value}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
