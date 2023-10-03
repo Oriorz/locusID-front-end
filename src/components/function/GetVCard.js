@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { socials } from "./namelist";
+import { socials } from "../namelist";
 import M from "materialize-css";
 
 function GetVCard({ userProfile }) {

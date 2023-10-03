@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { UserContext } from "../../App";
-import GetVCard from "../GetVCard";
+import GetVCard from "./GetVCard";
 
 const UserContact = ({ userProfile, setProfile, token }) => {
   const [address, setAddress] = useState("");
