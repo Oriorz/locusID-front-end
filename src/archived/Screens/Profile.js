@@ -1,11 +1,16 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../App";
-import { socials, state_false, state_true, bios } from "../namelist";
+import {
+  socials,
+  state_false,
+  state_true,
+  bios,
+} from "../../components/namelist";
 import M from "materialize-css";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
-import { FloatSignin } from "../function/FloatSignin";
+import { FloatSignin } from "../../components/function/FloatSignin";
 
 const Profile = () => {
   const { state, dispatch } = useContext(UserContext); // user state context

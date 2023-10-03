@@ -1,10 +1,16 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext } from "react";
 import { UserContext } from "../../App";
 import { Link, useNavigate } from "react-router-dom";
 import M from "materialize-css";
 /* import { PostLoginData } from '../function/PostLoginData'; */
 
-export const LogIn = ({ showModal, setShowModal, setToken, userProfile, setProfile }) => {
+export const LogIn = ({
+  showModal,
+  setShowModal,
+  setToken,
+  userProfile,
+  setProfile,
+}) => {
   const { state, dispatch } = useContext(UserContext);
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
@@ -14,8 +20,8 @@ export const LogIn = ({ showModal, setShowModal, setToken, userProfile, setProfi
   } */
 
   const handleEmailChange = (e) => {
-    setEmail(String(e).toLowerCase())
-  }
+    setEmail(String(e).toLowerCase());
+  };
 
   const PostData = () => {
     if (
@@ -47,10 +53,10 @@ export const LogIn = ({ showModal, setShowModal, setToken, userProfile, setProfi
           dispatch({ type: "USER", payload: data.user });
           M.toast({ html: "signed in success", classes: "green darken-1" });
           /* navigate("/profile"); */
-          setShowModal(false)
-          setToken(true)
-          setProfile({user:data.user})
-          window.location.reload()
+          setShowModal(false);
+          setToken(true);
+          setProfile({ user: data.user });
+          window.location.reload();
         }
       })
       .catch((err) => {
@@ -66,7 +72,9 @@ export const LogIn = ({ showModal, setShowModal, setToken, userProfile, setProfi
             <div className="relative w-5/6 my-6 mx-auto max-w-3xl">
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t ">
-                  <h3 className="text-3xl font=semibold text-center">iTap Login</h3>
+                  <h3 className="text-3xl font=semibold text-center">
+                    iTap Login
+                  </h3>
                   <button
                     className="bg-transparent border-0 text-black float-right"
                     onClick={() => setShowModal(false)}
@@ -76,45 +84,7 @@ export const LogIn = ({ showModal, setShowModal, setToken, userProfile, setProfi
                     </span>
                   </button>
                 </div>
-                {/* <div className="relative p-6 flex-auto">
-                  <form className="bg-gray-200 shadow-md rounded px-8 pt-6 pb-8 w-full">
-                    <label className="block text-black text-sm font-bold mb-1">
-                      First Name
-                    </label>
-                    <input className="shadow appearance-none border rounded w-full py-2 px-1 text-black" />
-                    <label className="block text-black text-sm font-bold mb-1">
-                      Last Name
-                    </label>
-                    <input className="shadow appearance-none border rounded w-full py-2 px-1 text-black" />
-                    <label className="block text-black text-sm font-bold mb-1">
-                      Address
-                    </label>
-                    <input className="shadow appearance-none border rounded w-full py-2 px-1 text-black" />
-                    <label className="block text-black text-sm font-bold mb-1">
-                      City
-                    </label>
-                    <input className="shadow appearance-none border rounded w-full py-2 px-1 text-black" />
-                  </form>
-                </div>
-                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                  <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
-                    type="button"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Close
-                  </button>
-                  <button
-                    className="text-white bg-yellow-500 active:bg-yellow-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
-                    type="button"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Submit
-                  </button>
-                </div> */}
                 <div className="relative p-6 flex-auto z-50">
-
-
                   <input
                     type="text"
                     placeholder="email"
@@ -129,14 +99,13 @@ export const LogIn = ({ showModal, setShowModal, setToken, userProfile, setProfi
                   />
                 </div>
                 <div className="flex flex-col items-center justify-around p-6 border-t border-solid border-blueGray-200 rounded-b">
-
                   <button
                     className="btn waves-effect waves-light blue darken-2"
                     onClick={() => PostData()}
                   >
                     Login
                   </button>
-                  <h6 className='m-3 mt-5 underline'>
+                  <h6 className="m-3 mt-5 underline">
                     <Link to="/reset">Forgot password?</Link>
                   </h6>
                 </div>
@@ -147,4 +116,4 @@ export const LogIn = ({ showModal, setShowModal, setToken, userProfile, setProfi
       ) : null}
     </>
   );
-}
+};

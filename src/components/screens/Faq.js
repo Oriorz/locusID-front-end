@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import M from "materialize-css";
-import Footer from "./Footer";
+import Footer from "../function/Footer";
 
 const Faq = () => {
   useEffect(() => {

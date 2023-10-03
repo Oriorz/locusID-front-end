@@ -29,22 +29,12 @@ const FirstTimeSetup = () => {
 
   return (
     <>
-      <div className="mycard auth-card font-rubikdirt text-[70px] mt-3 py-1">iTap </div>
+      <div className="mycard auth-card font-rubikdirt text-[70px] mt-3 py-1">
+        iTap{" "}
+      </div>
       <div className="mycard">
         <div className="card auth-card input-field">
           <h2 className="text-2xl">Setup New Password</h2>
-          {/* <input
-          type="text"
-          placeholder="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        /> */}
-          {/* <input
-          type="password"
-          placeholder="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        /> */}
           <div className="row">
             <div className="input-field col s12">
               <input

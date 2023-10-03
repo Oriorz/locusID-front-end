@@ -1,6 +1,6 @@
 import React from "react";
-import ContactForm from "../ContactForm";
-import Footer from "./Footer";
+import ContactForm from "../function/ContactForm";
+import Footer from "../function/Footer";
 import M from "materialize-css";
 
 function ContactUs(props) {

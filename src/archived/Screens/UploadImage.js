@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, React } from "react";
 import Cropper from "cropperjs";
 import ReactDOM from "react-dom";
-import QuipComponent from "./NewComponent";
+import QuipComponent from "../../archived/Components/NewComponent";
 const UploadImage = () => {
   const [image, setImage] = useState();
   const imageRef = useRef();

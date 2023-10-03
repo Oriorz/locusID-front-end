@@ -169,7 +169,7 @@ const UserContact = ({ userProfile, setProfile, token }) => {
       alert("not signed in");
       return;
     }
-    fetch(`/updatevcard`, {
+    fetch(`/api/updatevcard`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -208,10 +208,6 @@ const UserContact = ({ userProfile, setProfile, token }) => {
   return (
     /*  <div className="grid grid-cols-3 items-center justify-around my-auto px-3 gap-7"> */
     <div className="flex flex-row items-center justify-around mb-2 px-3 gap-10 mx-auto">
-      {/* <div key="getVCard">
-
-        <GetVCard userProfile={userProfile} />
-      </div> */}
       <div className="flex flex-col items-center justify-center ">
         <GetVCard userProfile={userProfile} />
         {token && (

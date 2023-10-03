@@ -2,22 +2,14 @@
 import React, { useEffect, useState, useContext } from "react";
 import { UserContext } from "../../App";
 import { useParams } from "react-router-dom";
-import { socials } from "../namelist";
 import M from "materialize-css";
-import CopyLink from "../function/copyLink";
 import ShowQR from "../function/ShowQR";
-import GetVCard from "../GetVCard";
 import EmailActivation from "../function/EmailActivation";
 import { FloatSignin } from "../function/FloatSignin";
 import { ProfileNotes } from "../function/ProfileNotes";
-import { InputProfile } from "../function/InputProfile";
-import { EmbedMap } from "../function/EmbedMap";
-import { GetMapMetaData } from "../function/GetMapMetaData";
 import { CreateLink } from "../function/CreateLink";
-import { ScreenInfo } from "../function/ScreenInfo";
 import { ProfileSocials } from "../function/ProfileSocials";
 import HorizontalCard from "../function/HorizontalCard";
-import NameTag from "../function/NameTag";
 import CoverPhoto from "../function/CoverPhoto";
 import UserContact from "../function/UserContact";
 import { ProfileSales } from "../function/ProfileSales";
@@ -164,7 +156,6 @@ const UserProfile = () => {
 
   return (
     <div>
-      {/* <ScreenInfo /> */}
       {/* <div className={`${theme}`}> */}
       {/* <FloatSignin
         token={token}
@@ -360,19 +351,6 @@ const UserProfile = () => {
                       </div>
                     </>
                   )}
-                  {/* <div className="grid grid-cols-3 items-center justify-around my-auto px-3">
-                  <div key="getVCard">
-                    <GetVCard userProfile={userProfile} />
-                  </div>
-                  <div>
-                    <button className="btn waves-effect waves-light green darken-3 w-40 font-poppins">
-                      asdf
-                    </button>
-                  </div>
-                  <div>
-                    <button className="btn waves-effect rounded-full waves-light green darken-3 "></button>
-                  </div>
-                </div> */}
                   <UserContact
                     userProfile={userProfile}
                     token={token}
