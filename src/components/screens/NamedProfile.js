@@ -17,7 +17,7 @@ import { ProfileGames } from "../function/ProfileGames";
 //const { copyLink } = require("../copyLink");
 //var fs = require('fs');
 
-const UserProfile = () => {
+const NamedProfile = () => {
   const { state, dispatch } = useContext(UserContext); // user state context
   /* const listRef = useRef();
   const navigate = useNavigate(); */
@@ -411,4 +411,4 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export default NamedProfile;

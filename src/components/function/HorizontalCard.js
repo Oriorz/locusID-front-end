@@ -45,7 +45,8 @@ const HorizontalCard = () => {
           allowFullScreen
           scrolling="yes"
           className="w-96 h-[580px] overflow-y-hidden"
-          src="https://www.propertyguru.com.my/property-listing/eco-spring-for-sale-by-maria-tan-36855929"
+          //src="https://www.propertyguru.com.my/property-listing/eco-spring-for-sale-by-maria-tan-36855929"
+          src="https://embed.propertyguru.com.my/"
         ></iframe>
       </div>
       <div className="flex flex-none flex-col items-center space-y-1 overflow-y-hidden">

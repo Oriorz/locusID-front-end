@@ -106,7 +106,7 @@ const UserContact = ({ userProfile, setProfile, token }) => {
       return;
     }
     /* console.log("state is ", state) */
-    fetch(`/updatedetails/${text}`, {
+    fetch(`/api/updatedetails/${text}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -119,7 +119,7 @@ const UserContact = ({ userProfile, setProfile, token }) => {
       .then((res) => res.json())
       .then((data) => {
         setProfile({ user: data });
-        console.log("updatedetails/", text, " result is ", data);
+        console.log("/api/updatedetails/", text, " result is ", data);
         localStorage.setItem(
           "user",
           JSON.stringify({ ...state, [text]: data[text] })
@@ -138,7 +138,7 @@ const UserContact = ({ userProfile, setProfile, token }) => {
       return;
     }
     /* console.log("state is ", state) */
-    fetch(`/updatedetails/${text}`, {
+    fetch(`/api/updatedetails/${text}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -151,7 +151,7 @@ const UserContact = ({ userProfile, setProfile, token }) => {
       .then((res) => res.json())
       .then((data) => {
         setProfile({ user: data });
-        console.log("updatedetails/email result is ", data);
+        console.log("/api/updatedetails/email result is ", data);
         localStorage.setItem(
           "user",
           JSON.stringify({ ...state, contactemail: data[text] })
@@ -245,7 +245,7 @@ const UserContact = ({ userProfile, setProfile, token }) => {
 
             <div className="row items-center justify-around  max-w-lg mx-auto mt-2  text-center m-auto py-1">
               <p className="col s3 text-black items-center justify-around pt-1 mt-1 text-right text-sm">
-                x. Nickname :{" "}
+                2. Nickname :{" "}
               </p>
               <input
                 className="col s8 border-2 bg-slate-300 mr-2"
@@ -259,7 +259,7 @@ const UserContact = ({ userProfile, setProfile, token }) => {
             </div>
             <div className="row items-center justify-around  max-w-lg mx-auto mt-2  text-center m-auto py-1 ">
               <p className="col s3 text-black items-center justify-around pt-2 mt-2 text-right text-sm">
-                5. Title :{" "}
+                3. Title :{" "}
               </p>
               <input
                 className="col s8  mr-2"
@@ -288,7 +288,7 @@ const UserContact = ({ userProfile, setProfile, token }) => {
 
             <div className="row items-center justify-around  max-w-lg mx-auto mt-2  text-center m-auto py-1 ">
               <p className="col s3 text-black items-center justify-around pt-2 mt-2 text-right text-sm">
-                2. Phone :{" "}
+                5. Phone :{" "}
               </p>
               <input
                 className="col s8  mr-2"
@@ -302,7 +302,7 @@ const UserContact = ({ userProfile, setProfile, token }) => {
             </div>
             <div className="row items-center justify-around  max-w-lg mx-auto mt-2  text-center m-auto py-1 ">
               <p className="col s3 text-black items-center justify-around pt-2 mt-2 text-right text-sm">
-                3. Email :{" "}
+                6. Email :{" "}
               </p>
               <input
                 className="col s8  mr-2"
@@ -316,7 +316,7 @@ const UserContact = ({ userProfile, setProfile, token }) => {
             </div>
             <div className="row items-center justify-around  max-w-lg mx-auto mt-2  text-center m-auto py-1 ">
               <p className="col s3 text-black items-center justify-around pt-2 mt-2 text-right text-sm">
-                6. Url :{" "}
+                7. Url :{" "}
               </p>
               <input
                 className="col s8  mr-2"
@@ -328,7 +328,7 @@ const UserContact = ({ userProfile, setProfile, token }) => {
             </div>
             <div className="row items-center justify-around  max-w-lg mx-auto mt-2  text-center m-auto py-1 ">
               <p className="col s3 text-black items-center justify-around pt-2 mt-2 text-right text-sm">
-                7. Address :{" "}
+                8. Address :{" "}
               </p>
               <textarea
                 className="col s8 text-sm mr-1 h-24 border-2 border-solid browsers-default"
@@ -342,7 +342,7 @@ const UserContact = ({ userProfile, setProfile, token }) => {
             </div>
             <div className="row items-center justify-around  max-w-lg mx-auto mt-2  text-center m-auto py-1 ">
               <p className="col s3 text-black items-center justify-around pt-2 mt-2 text-right text-sm">
-                X. Notes :{" "}
+                9. Notes :{" "}
               </p>
               <textarea
                 className="col s8 text-sm mr-1 h-24 border-2 border-solid browsers-default"

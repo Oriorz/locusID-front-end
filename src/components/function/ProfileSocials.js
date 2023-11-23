@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import M from "materialize-css";
-import { socials, patterns } from "../namelist";
+import { socials } from "../namelist";
 import CopyLink from "./copyLink";
 
 export const ProfileSocials = ({ userProfile, token }) => {
-  const [selectedApp, setSelectedApp] = useState("");
+  /* const [selectedApp, setSelectedApp] = useState(""); */
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [app, setApp] = useState("");
   const [name, setName] = useState("");
@@ -15,7 +15,7 @@ export const ProfileSocials = ({ userProfile, token }) => {
   const [title, setTitle] = useState("");
   const [profile, setProfile] = useState(userProfile.user);
   const editRef = useRef();
-  const [clip, setClip] = useState("");
+  /* const [clip, setClip] = useState(""); */
 
   useEffect(() => {
     if (app) {

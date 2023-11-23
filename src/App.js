@@ -10,6 +10,7 @@ import FirstTimeSetup from "./components/screens/FirstTimeSetup";
 import Faq from "./components/screens/Faq";
 import ContactUs from "./components/screens/ContactUs";
 import CheckYourEmail from "./components/screens/CheckYourEmail";
+import NamedProfile from "./components/screens/NamedProfile";
 
 export const UserContext = createContext();
 
@@ -33,6 +34,7 @@ const Routing = () => {
         {/* This is public */}
         <Route path="/" element={<Home />} />
         <Route path="/profile/:userid" element={<UserProfile />} />
+        <Route path="/u/:userid" element={<NamedProfile />} />
         <Route exact path="/resetpassword" element={<ResetPassword />} />
         <Route path="/reset/:token" element={<NewPassword />} />
         <Route path="/setup/:token" element={<FirstTimeSetup />} />
