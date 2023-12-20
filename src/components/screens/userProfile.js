@@ -383,7 +383,7 @@ const UserProfile = () => {
                   <br></br>
                   <br></br>
 
-                  <HorizontalCard />
+                  <HorizontalCard userProfile={userProfile} token={token} />
 
                   <br></br>
                   <br></br>

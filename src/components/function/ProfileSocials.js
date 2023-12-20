@@ -18,6 +18,18 @@ export const ProfileSocials = ({ userProfile, token }) => {
   /* const [clip, setClip] = useState(""); */
 
   useEffect(() => {
+    var elemsa = document.querySelectorAll(".modal");
+    M.Modal.init(elemsa);
+    var elemsb = document.querySelectorAll("select");
+    M.FormSelect.init(elemsb);
+    var elemsc = document.querySelectorAll(".collapsible");
+    M.Collapsible.init(elemsc, {
+      container: document.body,
+      constrainWidth: false,
+    });
+  }, []);
+
+  useEffect(() => {
     if (app) {
       const selectedSocialObj = socials.find((social) => social.value === app);
       setLink(selectedSocialObj ? selectedSocialObj.link : "");

@@ -34,12 +34,13 @@ export const CreateLink = ({ userProfile, token }) => {
     window.location.reload();
   };
 
-  const handleDelete = (_id) => {
+  const handleDelete = async (_id) => {
     if (!localStorage.getItem("jwt")) {
       alert("not signed in");
       return;
     }
-    fetch(`/api/deletelink`, {
+    //testing switching to use async-await
+    /* fetch(`/api/deletelink`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -55,7 +56,31 @@ export const CreateLink = ({ userProfile, token }) => {
       .then((result) => {
         setProfile(result);
         console.log("deletelink result is ", result);
+      }); */
+
+    try {
+      const response = await fetch(`/api/deletelink`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("jwt"),
+        },
+        body: JSON.stringify({
+          link: {
+            _id,
+          },
+        }),
       });
+
+      if (!response.ok) throw new Error("Failed to delete link");
+
+      const result = await response.json();
+      setProfile(result);
+      console.log("deletelink result is ", result);
+    } catch (error) {
+      console.error("Error deleting link:", error);
+      // Handle error as needed
+    }
   };
 
   const handleEdit = (_id) => {
@@ -137,9 +162,6 @@ export const CreateLink = ({ userProfile, token }) => {
                         delete
                       </i>
                     </div>
-                    {/* <div>
-                      <p className='text-base overflow-hidden'>{item.link}</p>
-                    </div> */}
                   </div>
                 </div>
                 <div
