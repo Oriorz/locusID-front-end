@@ -107,9 +107,9 @@ const HorizontalCard = ({ userProfile, token }) => {
 
   return (
     <>
-      <div className="w-11/12 h-full overflow-x-scroll flex flex-row items-center justify-start mx-4 p-3 gap-6 border-b-2 border-solid border-skin-base">
-        {token && (
-          <>
+      {token && (
+        <>
+          <div className="w-11/12 h-full overflow-x-scroll flex flex-row items-center justify-start mx-4 p-3 gap-6 border-b-2 border-solid border-skin-base">
             {profile.embeds &&
               profile.embeds.map((item) => {
                 return (
@@ -204,122 +204,55 @@ const HorizontalCard = ({ userProfile, token }) => {
                 add
               </i>
             </div>
-          </>
-        )}
-        {/* 
-        <div
-          className="flex flex-none flex-col items-center space-y-1 overflow-y-hidden modal-trigger"
-          href={"#modal1"}
-        >
-          <div className=" border-2 rounded-lg bg-red-700 bg-opacity-70 w-96 h-[50px]">
-            <p className=" text-center my-3 align-middle text-xl mx-auto">
-              Edit Embed
-            </p>
+            <div className="modal bottom-sheet text-center" id={"modaladd"}>
+              <p className="text-xl m-2 p-1">Input Embed Link : </p>
+              <div className="row items-center justify-around  max-w-lg mx-auto pt-2 mt-2 border-solid border-b-[1px] border-gray-300 text-center mb-3  pb-4">
+                <p className="col s3 text-black items-center justify-around pt-2 mt-2 text-right">
+                  New https://{" "}
+                </p>
+                <input
+                  className="col s9 border-2 bg-slate-300"
+                  defaultValue=""
+                  onChange={(e) => setLink(e.target.value)}
+                ></input>
+              </div>
+              <div className="mb-3">
+                <button
+                  className="btn modal-close waves-effect waves-light blue darken-3 mt-3 mx-3"
+                  onClick={() => handleAdd()}
+                >
+                  Create
+                </button>
+                <button className="btn modal-close waves-effect waves-light green darken-2 mt-3 mx-3 ">
+                  Cancel
+                </button>
+              </div>
+            </div>
           </div>
-          <iframe
-            className="w-96 h-[580px] overflow-y-hidden "
-            src="https://www.tiktok.com/embed/7235191495257591041"
-            allowFullScreen
-            scrolling="no"
-            allow="encrypted-media;"
-          ></iframe>
-          <div className=" border-2 rounded-lg bg-blue-700 bg-opacity-70 w-96 h-[50px]">
-            <p className=" text-center my-3 align-middle text-xl mx-auto">
-              Delete Embed
-            </p>
+        </>
+      )}
+      {!token && (
+        <>
+          <div className="w-11/12 h-full overflow-x-scroll flex flex-row items-center justify-start mx-4 p-3 gap-6 border-b-2 border-solid border-skin-base">
+            {profile.embeds &&
+              profile.embeds.map((item) => {
+                return (
+                  <React.Fragment key={item._id}>
+                    <div className="flex flex-none flex-col items-center space-y-1 overflow-y-hidden">
+                      <iframe
+                        className="w-96 h-[580px] overflow-y-hidden "
+                        src={item.link ? "https://" + item.link : ""}
+                        allowFullScreen
+                        scrolling="no"
+                        allow="encrypted-media;"
+                      ></iframe>
+                    </div>
+                  </React.Fragment>
+                );
+              })}
           </div>
-        </div> */}
-
-        {/* <div className="flex flex-none flex-col items-center space-y-1 overflow-y-hidden">
-        <iframe
-          title="1"
-          className="w-96 h-[580px]  "
-          src="https://www.youtube.com/embed/sUwD3GRPJos"
-          allowFullScreen
-          scrolling="no"
-          allow="encrypted-media;"
-        ></iframe>
-      </div>
-      <div className="flex flex-none flex-col items-center space-y-1 overflow-y-hidden">
-        <iframe
-          className="w-96 h-[580px] overflow-y-hidden"
-          src="https://www.instagram.com/p/CvR8jLorSr2/embed/"
-          allowFullScreen
-          scrolling="no"
-          allow="encrypted-media;"
-        ></iframe>
-      </div>
-      <div className="flex flex-none flex-col items-center space-y-1 overflow-y-hidden">
-        <iframe
-          allow="encrypted-media;"
-          allowFullScreen
-          scrolling="no"
-          className="w-96 h-[580px] overflow-y-hidden"
-          src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FVBake.KL%2Fposts%2Fpfbid0aS8UYnzNb3raQbrfkXsRNCTQbfNPLvf1UMLkC1Vhe84i49hgQj1GthFAdKMGeXjcl&show_text=true&width=360"
-        ></iframe>
-      </div>
-      <div className="flex flex-none flex-col items-center space-y-1 overflow-y-hidden">
-        <iframe
-          allow="encrypted-media;"
-          allowFullScreen
-          scrolling="yes"
-          className="w-96 h-[580px] overflow-y-hidden"
-          //src="https://www.propertyguru.com.my/property-listing/eco-spring-for-sale-by-maria-tan-36855929"
-          src="https://embed.propertyguru.com.my/"
-        ></iframe>
-      </div>
-      <div className="flex flex-none flex-col items-center space-y-1 overflow-y-hidden">
-        <iframe
-          allow="encrypted-media;"
-          allowFullScreen
-          scrolling="yes"
-          className="w-96 h-[580px] overflow-y-hidden"
-          src="https://www.carlist.my/used-cars/otr-price-2011-perodua-myvi-1-3-ezi-hatchback/12578459"
-        ></iframe>
-      </div>
-      <div className="flex flex-none flex-col items-center space-y-1 overflow-y-hidden">
-        <iframe
-          allow="encrypted-media;"
-          allowFullScreen
-          scrolling="yes"
-          className="w-96 h-[580px] overflow-y-hidden"
-          src="https://www.tiktok.com/embed/7207051695736524059"
-        ></iframe>
-      </div>
-      <div className="flex flex-none flex-col items-center space-y-1 overflow-y-hidden">
-        <iframe
-          allow="encrypted-media;"
-          allowFullScreen
-          scrolling="yes"
-          className="w-96 h-[580px] overflow-y-hidden"
-          src="https://www.instagram.com/p/CycnuDfRhpl/embed/"
-        ></iframe>
-      </div> */}
-      </div>
-      <div className="modal bottom-sheet text-center" id={"modaladd"}>
-        <p className="text-xl m-2 p-1">Input Embed Link : </p>
-        <div className="row items-center justify-around  max-w-lg mx-auto pt-2 mt-2 border-solid border-b-[1px] border-gray-300 text-center mb-3  pb-4">
-          <p className="col s3 text-black items-center justify-around pt-2 mt-2 text-right">
-            New https://{" "}
-          </p>
-          <input
-            className="col s9 border-2 bg-slate-300"
-            defaultValue=""
-            onChange={(e) => setLink(e.target.value)}
-          ></input>
-        </div>
-        <div className="mb-3">
-          <button
-            className="btn modal-close waves-effect waves-light blue darken-3 mt-3 mx-3"
-            onClick={() => handleAdd()}
-          >
-            Create
-          </button>
-          <button className="btn modal-close waves-effect waves-light green darken-2 mt-3 mx-3 ">
-            Cancel
-          </button>
-        </div>
-      </div>
+        </>
+      )}
     </>
   );
 };
