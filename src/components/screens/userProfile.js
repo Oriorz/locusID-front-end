@@ -14,6 +14,7 @@ import CoverPhoto from "../function/CoverPhoto";
 import UserContact from "../function/UserContact";
 import { ProfileSales } from "../function/ProfileSales";
 import { ProfileGames } from "../function/ProfileGames";
+import HeroSection from "../function/HeroSection";
 //const { copyLink } = require("../copyLink");
 //var fs = require('fs');
 
@@ -156,14 +157,6 @@ const UserProfile = () => {
 
   return (
     <div>
-      {/* <div className={`${theme}`}> */}
-      {/* <FloatSignin
-        token={token}
-        setToken={setToken}
-        setTheme={setTheme}
-        theme={theme}
-        setProfile={setProfile}
-      /> */}
       {userProfile ? (
         userProfile.user.isInitialized === true ? (
           <>
@@ -182,7 +175,7 @@ const UserProfile = () => {
                 <div className="flex flex-col items-center justify-center -z-10 my-5 mx-auto w-11/12 border-b-2 border-skin-base pb-4">
                   {userProfile && (
                     <>
-                      <h1 className="font-poppins text-4xl text-skin-base">
+                      <h1 className="font-poppins text-3xl text-skin-base">
                         {userProfile.user.name
                           ? userProfile.user.name
                           : "Your Name"}{" "}
@@ -195,7 +188,7 @@ const UserProfile = () => {
                           </i>
                         )}
                       </h1>
-                      <p className="font-poppins text-xl text-skin-base mb-3">
+                      <p className="font-poppins text-lg text-skin-base mb-3">
                         {userProfile.user.organization
                           ? userProfile.user.organization
                           : "Your Organization"}
@@ -207,7 +200,7 @@ const UserProfile = () => {
                             edit
                           </i>
                         )}
-                        <strong> &nbsp;&nbsp; | &nbsp;&nbsp; </strong>{" "}
+                        <strong> | </strong>{" "}
                         {userProfile.user.title
                           ? userProfile.user.title
                           : "Your Title"}{" "}
@@ -369,6 +362,7 @@ const UserProfile = () => {
                 <CreateLink userProfile={userProfile} token={token} />
                 <div className="border-b-2  border-skin-base w-11/12 mx-auto"></div>
 
+                {/* <HeroSection userProfile={userProfile} token={token} /> */}
                 <ProfileSocials userProfile={userProfile} token={token} />
 
                 {/* <div className="border-b-2 border-skin-base w-11/12 mx-auto"></div> */}
@@ -377,12 +371,6 @@ const UserProfile = () => {
 
                 <ProfileGames userProfile={userProfile} token={token} />
                 <>
-                  <br></br>
-                  <br></br>
-                  <br></br>
-                  <br></br>
-                  <br></br>
-
                   <HorizontalCard userProfile={userProfile} token={token} />
 
                   <br></br>
@@ -405,7 +393,11 @@ const UserProfile = () => {
           />
         )
       ) : (
-        <h2>loading...!</h2>
+        <div>
+          <div className="w-full h-60 bg-blue-100  opacity-50 z-20 flex flex-col items-center justify-center">
+            <div className="w-52 h-52 rounded-full bg-white absolute top-36 z-40 border-2 border-solid border-skin-base opacity-100"></div>
+          </div>
+        </div>
       )}
     </div>
   );

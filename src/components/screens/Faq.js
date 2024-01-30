@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import M from "materialize-css";
 import Footer from "../function/Footer";
+import NavBar from "../function/Navbar";
 
 const Faq = () => {
   useEffect(() => {
@@ -14,7 +15,12 @@ const Faq = () => {
   return (
     <div>
       <div className="home">
-        <h2 class="center-align black-text ">Frequently Asked Question</h2>
+        <div className="row sm:max-w-xl md:max-w-xl lg:max-w-2xl text-left p-6">
+          <br></br>
+          <h6 className="container text-center text-5xl font-sans">
+            Frequently Asked Question
+          </h6>
+        </div>
         <div className="accordion-container ">
           <ul className="collapsible  ">
             <li className="collapsible-item ">
@@ -121,7 +127,6 @@ const Faq = () => {
         Didn't find the answer that you are looking for? Get in touch with us.
       </h6>
       <br></br>
-      <Footer />
     </div>
   );
 };

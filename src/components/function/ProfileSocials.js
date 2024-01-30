@@ -210,18 +210,16 @@ export const ProfileSocials = ({ userProfile, token }) => {
                               <div className="m-3 p-3">
                                 <p>
                                   Go to{" "}
-                                  {profile.name ? profile.name + "'s" : ""}{" "}
-                                  {title ? title : ""}:
+                                  {profile.name ? profile.name + "'s" : ""}
                                 </p>
 
                                 <a
-                                  className=" text-xl m-3 p-3 btn items-center justify-center my-auto text-center flex "
+                                  className=" text-xl m-3 p-3 btn items-center justify-center my-auto text-center flex"
                                   href={item.link}
                                   rel="noopener noreferrer"
                                   target="_blank"
                                 >
-                                  {" "}
-                                  {item.name}{" "}
+                                  {title ? title : ""}
                                 </a>
                               </div>
                             </>

@@ -9,110 +9,75 @@ function ContactForm() {
   const [contactMethod, setContactMethod] = useState("email");
   const [message, setMessage] = useState("");
 
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-  const [screenHeight, setScreenHeight] = useState(window.innerHeight);
-  const [effect, setEffect] = useState(false);
-  var w = window.innerWidth;
-  var h = window.innerHeight;
-
-  const scrollRef = useRef();
-
-  useEffect(() => {
+  /* useEffect(() => {
     // Initialize Materialize CSS select components
     M.FormSelect.init(document.querySelectorAll("select"));
-  }, []);
-
-  useEffect(() => {
-    const handleResize = () => {
-      /* setDimensions({
-        height: window.innerHeight,
-        width: window.innerWidth,
-      }); */
-      setScreenHeight(window.innerHeight);
-      setScreenWidth(window.innerWidth);
-    };
-    window.addEventListener("resize", handleResize);
-  }, []);
+  }, []); */
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Send form data to backend using fetch or axios
     console.log("Form submitted:", {
-      name,
+      /* name,
       email,
-      phone,
+      phone, */
       enquiryType,
       contactMethod,
       message,
     });
+    if (contactMethod === "whatsapp") {
+      const url = "https://wa.me/601159959078?text=" + message;
+      const newWindow = window.open(url, "_blank", "noopener,noreferrer");
+      if (newWindow) newWindow.opener = null;
+    } else if (contactMethod === "email") {
+      console.log("contact method is not whatsapp");
+      const url =
+        "mailto:contact.itapworld@gmail.com?subject=" +
+        enquiryType +
+        "&body=" +
+        message;
+      const newWindow = window.open(url, "_blank", "noopener,noreferrer");
+      if (newWindow) newWindow.opener = null;
+    } else if (contactMethod === "fb") {
+      const url = "https://m.me/itapworld?text=" + enquiryType + ": " + message;
+      const newWindow = window.open(url, "_blank", "noopener,noreferrer");
+      if (newWindow) newWindow.opener = null;
+    } else {
+      M.toast({ html: "please select contact method" });
+    }
+
+    /* dummy.current.click(); */
     // Clear form fields
     setName("");
     setEmail("");
     setPhone("");
-    setEnquiryType("general");
-    setContactMethod("email");
+    setEnquiryType("");
+    setContactMethod("");
     setMessage("");
   };
 
+  /* useEffect(() => {
+    // Initialize Materialize CSS select component
+    M.FormSelect.init(document.getElementById("enquiry-type"));
+  }, [enquiryType]); // Trigger reinitialization when enquiryType changes
+
+  useEffect(() => {
+    // Initialize Materialize CSS select component
+    M.FormSelect.init(document.getElementById("contact-method"));
+  }, [contactMethod]); // Trigger reinitialization when contactMethod changes */
+
   return (
     <>
-      <div className="form-container row flex-col">
-        <div className="mx-3 p-4">
-          asdf screen width is {screenWidth} and screen height is
-          {screenHeight}
-        </div>
-        <button
-          className={`${
-            "animate-wiggle"
-            /* effect && "animate-wiggle" */
-            /* "animate-wiggle" */
-          } bg-blue-500 text-white rounded hover:bg-blue-700 hover:shadow-xl p-4 content-center my-auto`}
-          onClick={() => {
-            setEffect(true);
-          }}
-          onAnimationEnd={() => {
-            setEffect(false);
-          }}
-        >
-          {" "}
-          Wiggle{" "}
-        </button>
+      <div className="form-container row flex-col sm:w-[480px]">
         <form
           //className="bg-blue-200 border-4 border-red-300 rounded-3xl mx-3 p-4 lg:max-w-lg"
-          className="bg-blue-100 border-4 border-red-300 rounded-3xl mx-3 p-4"
+          className="bg-blue-200 bg-opacity-40 border-4  drop-shadow-md rounded-3xl mx-3 p-4 relative"
           onSubmit={handleSubmit}
         >
-          <div className="input-field">
-            <input
-              type="text"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-            <label htmlFor="name">Name</label>
-          </div>
-          <div className="input-field">
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <label htmlFor="email">Email</label>
-          </div>
-          <div className="input-field">
-            <input
-              type="tel"
-              id="phone"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-            />
-            <label htmlFor="phone">Phone number</label>
-          </div>
-          <div className="input-field">
+          <label htmlFor="enquiry-type">Enquiry type</label>
+          <div className="input-field ">
             <select
+              className="browser-default"
               id="enquiry-type"
               value={enquiryType}
               onChange={(e) => setEnquiryType(e.target.value)}
@@ -126,10 +91,11 @@ function ContactForm() {
               <option value="partnership">Partnership</option>
               <option value="technical">Technical</option>
             </select>
-            <label htmlFor="enquiry-type">Enquiry type</label>
           </div>
+          <label htmlFor="contact-method">Preferred contact method</label>
           <div className="input-field">
             <select
+              className="browser-default"
               id="contact-method"
               value={contactMethod}
               onChange={(e) => setContactMethod(e.target.value)}
@@ -140,14 +106,13 @@ function ContactForm() {
               </option>
               <option value="whatsapp">WhatsApp</option>
               <option value="email">Email</option>
-              <option value="call">Call</option>
+              <option value="fb">Facebook Messenger</option>
             </select>
-            <label htmlFor="contact-method">Preferred contact method</label>
           </div>
           <div className="input-field">
-            <textarea
+            <input
               id="message"
-              className="materialize-textarea"
+              type="text" // Set the type to "text"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               required
@@ -156,7 +121,10 @@ function ContactForm() {
           </div>
 
           <div className="section center-align">
-            <button type="submit" className="waves-effect waves-light btn">
+            <button
+              type="submit"
+              className="waves-effect waves-light btn text-black"
+            >
               Submit
             </button>
           </div>

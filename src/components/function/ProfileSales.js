@@ -196,8 +196,7 @@ export const ProfileSales = ({ userProfile, token }) => {
                               <div className="m-3 p-3">
                                 <p>
                                   Go to{" "}
-                                  {profile.name ? profile.name + "'s" : ""}{" "}
-                                  {title ? title : ""}:
+                                  {profile.name ? profile.name + "'s" : ""}
                                 </p>
 
                                 <a
@@ -206,8 +205,7 @@ export const ProfileSales = ({ userProfile, token }) => {
                                   rel="noopener noreferrer"
                                   target="_blank"
                                 >
-                                  {" "}
-                                  {item.name}{" "}
+                                  {title ? title : "LINK"}
                                 </a>
                               </div>
                             </>

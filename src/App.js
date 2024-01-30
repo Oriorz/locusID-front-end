@@ -11,6 +11,13 @@ import Faq from "./components/screens/Faq";
 import ContactUs from "./components/screens/ContactUs";
 import CheckYourEmail from "./components/screens/CheckYourEmail";
 import NamedProfile from "./components/screens/NamedProfile";
+import RefundPolicy from "./components/screens/RefundPolicy";
+import TermsOfService from "./components/screens/TermsOfService";
+import PrivacyPolicy from "./components/screens/PrivacyPolicy";
+import Loading from "./components/screens/TestLoading";
+import Layouts from "./components/function/Layouts";
+import Shop from "./components/screens/Shop";
+import Payment from "./components/screens/Payment";
 
 export const UserContext = createContext();
 
@@ -32,15 +39,25 @@ const Routing = () => {
     <>
       <Routes>
         {/* This is public */}
-        <Route path="/" element={<Home />} />
+        <Route element={<Layouts />}>
+          <Route path="/" element={<Home />} />
+          <Route exact path="/resetpassword" element={<ResetPassword />} />
+          <Route path="/reset/:token" element={<NewPassword />} />
+          <Route path="/setup/:token" element={<FirstTimeSetup />} />
+          <Route path="/faq" element={<Faq />} />
+          <Route path="/contactus" element={<ContactUs />} />
+          <Route path="/checkyouremail" element={<CheckYourEmail />} />
+          {/* Newly added business module, need to check */}
+          <Route path="/refundpolicy" element={<RefundPolicy />} />
+          <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<TermsOfService />} />
+          <Route path="/testload" element={<Loading />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/payment" element={<Payment />} />
+        </Route>
+
         <Route path="/profile/:userid" element={<UserProfile />} />
         <Route path="/u/:userid" element={<NamedProfile />} />
-        <Route exact path="/resetpassword" element={<ResetPassword />} />
-        <Route path="/reset/:token" element={<NewPassword />} />
-        <Route path="/setup/:token" element={<FirstTimeSetup />} />
-        <Route path="/faq" element={<Faq />} />
-        <Route path="/contactus" element={<ContactUs />} />
-        <Route path="/checkyouremail" element={<CheckYourEmail />} />
 
         {/* this is private */}
         {/* <Route path="/signin" element={<Signin />} /> */}

@@ -123,66 +123,265 @@ function GetVCard({ userProfile }) {
   }
 
   const handleVCard = () => {
-    if (!userProfile.user.vcard) {
+    /* if (!userProfile.user.vcard) {
       M.toast({ html: "Please set Contact Card Details first" });
       return;
-    }
-    //var resultString = stringToAscii("BEGIN:VCARD")
+    } */
 
     const vCard = new VCard();
-    userProfile.user.vcard?.name
-      ? vCard.addName(userProfile.user.vcard.name)
-      : vCard.addName("My Name");
-    vCard.addEmail(
-      userProfile.user.vcard?.email ? userProfile.user.vcard.email : ""
-    );
-    if (userProfile.user.vcard?.phone) {
+
+    /* if (userProfile.user.vcard?.name)
+      userProfile.user.vcard?.name
+        ? vCard.addName(userProfile.user.vcard.name)
+        : vCard.addName("My Name"); */
+
+    if (userProfile.user.name) {
+      vCard.addName(
+        userProfile.user.vcard?.name
+          ? userProfile.user.vcard.name
+          : userProfile.user.name
+      );
+    } else {
+      if (userProfile.user.vcard?.name) {
+        vCard.addName(userProfile.user.vcard.name);
+      }
+    }
+
+    if (userProfile.user.contactemail) {
+      vCard.addEmail(
+        userProfile.user.vcard?.email
+          ? userProfile.user.vcard.email
+          : userProfile.user.contactemail
+      );
+    } else {
+      if (userProfile.user.vcard?.email) {
+        vCard.addEmail(userProfile.user.vcard.email);
+      }
+    }
+
+    if (userProfile.user.phone) {
+      vCard.addPhone(
+        userProfile.user.vcard?.phone
+          ? userProfile.user.vcard.phone
+          : userProfile.user.phone
+      );
+    } else {
+      if (userProfile.user.vcard?.phone) {
+        vCard.addPhone(userProfile.user.vcard.phone);
+      }
+    }
+
+    /* if (userProfile.user.vcard?.phone) {
       vCard.addPhone(userProfile.user.vcard.phone);
+    } */
+
+    if (userProfile.user.organization) {
+      vCard.addOrg(
+        userProfile.user.vcard?.organization
+          ? userProfile.user.vcard.organization
+          : userProfile.user.organization
+      );
+    } else {
+      if (userProfile.user.vcard?.organization) {
+        vCard.addOrg(userProfile.user.vcard.organization);
+      }
     }
-    if (userProfile.user.vcard?.organization) {
+    /* if (userProfile.user.vcard?.organization) {
       vCard.addOrg(userProfile.user.vcard.organization);
+    } */
+
+    if (userProfile.user.title) {
+      vCard.addTitle(
+        userProfile.user.vcard?.title
+          ? userProfile.user.vcard.title
+          : userProfile.user.title
+      );
+    } else {
+      if (userProfile.user.vcard?.title) {
+        vCard.addTitle(userProfile.user.vcard.title);
+      }
     }
-    if (userProfile.user.vcard?.title) {
+    /* if (userProfile.user.vcard?.title) {
       vCard.addTitle(userProfile.user.vcard.title);
+    } */
+
+    if (userProfile.user.url) {
+      vCard.addUrl(
+        userProfile.user.vcard?.url
+          ? userProfile.user.vcard.url
+          : userProfile.user.url,
+        "home"
+      );
+    } else {
+      if (userProfile.user.vcard?.url) {
+        vCard.addUrl(userProfile.user.vcard.url, "home");
+      }
     }
-    if (userProfile.user.vcard?.url) {
+    /* if (userProfile.user.vcard?.url) {
       vCard.addUrl(userProfile.user.vcard.url, "home");
+    } */
+
+    if (userProfile.user.address) {
+      vCard.addAddress(
+        userProfile.user.vcard?.address
+          ? userProfile.user.vcard.address
+          : userProfile.user.address,
+        "home"
+      );
+    } else {
+      if (userProfile.user.vcard?.address) {
+        vCard.addAddress(userProfile.user.vcard.address, "home");
+      }
     }
-    if (userProfile.user.vcard?.address) {
+    /* if (userProfile.user.vcard?.address) {
       vCard.addAddress(userProfile.user.vcard.address, "home");
+    } */
+
+    if (userProfile.user.notes) {
+      vCard.addNote(
+        userProfile.user.vcard?.notes
+          ? userProfile.user.vcard.notes
+          : userProfile.user.notes
+      );
+    } else {
+      if (userProfile.user.vcard?.notes) {
+        vCard.addNote(userProfile.user.vcard.notes);
+      }
     }
-    if (userProfile.user.vcard?.notes) {
+    /* if (userProfile.user.vcard?.notes) {
       vCard.addNote(userProfile.user.vcard.notes);
+    } */
+
+    if (userProfile.user.workemail) {
+      vCard.addEmail(
+        userProfile.user.vcard?.workemail
+          ? userProfile.user.vcard.workemail
+          : userProfile.user.workemail,
+        "work-email"
+      );
+    } else {
+      if (userProfile.user.vcard?.workemail) {
+        vCard.addEmail(userProfile.user.vcard.workemail, "work-email");
+      }
     }
-    if (userProfile.user.vcard?.workemail) {
+    /* if (userProfile.user.vcard?.workemail) {
       vCard.addEmail(userProfile.user.vcard.workemail, "work-email");
+    } */
+
+    if (userProfile.user.homephone) {
+      vCard.addPhone(
+        userProfile.user.vcard?.homephone
+          ? userProfile.user.vcard.homephone
+          : userProfile.user.homephone,
+        "home"
+      );
+    } else {
+      if (userProfile.user.vcard?.homephone) {
+        vCard.addPhone(userProfile.user.vcard.homephone, "home");
+      }
     }
-    if (userProfile.user.vcard?.homephone) {
+    /* if (userProfile.user.vcard?.homephone) {
       vCard.addPhone(userProfile.user.vcard.homephone, "home");
+    } */
+
+    if (userProfile.user.workphone) {
+      vCard.addPhone(
+        userProfile.user.vcard?.workphone
+          ? userProfile.user.vcard.workphone
+          : userProfile.user.workphone,
+        "work"
+      );
+    } else {
+      if (userProfile.user.vcard?.workphone) {
+        vCard.addPhone(userProfile.user.vcard.workphone, "work");
+      }
     }
-    if (userProfile.user.vcard?.workphone) {
+    /* if (userProfile.user.vcard?.workphone) {
       vCard.addPhone(userProfile.user.vcard?.workphone, "work");
+    } */
+
+    if (userProfile.user.homefax) {
+      vCard.addPhone(
+        userProfile.user.vcard?.homefax
+          ? userProfile.user.vcard.homefax
+          : userProfile.user.homefax,
+        "home,fax"
+      );
+    } else {
+      if (userProfile.user.vcard?.homefax) {
+        vCard.addPhone(userProfile.user.vcard.homefax, "home,fax");
+      }
     }
-    if (userProfile.user.vcard?.homefax) {
+    /* if (userProfile.user.vcard?.homefax) {
       vCard.addPhone(userProfile.user.vcard?.homefax, "home,fax");
+    } */
+
+    if (userProfile.user.workfax) {
+      vCard.addPhone(
+        userProfile.user.vcard?.workfax
+          ? userProfile.user.vcard.workfax
+          : userProfile.user.workfax,
+        "work,fax"
+      );
+    } else {
+      if (userProfile.user.vcard?.workfax) {
+        vCard.addPhone(userProfile.user.vcard.workfax, "work,fax");
+      }
     }
-    if (userProfile.user.vcard?.workfax) {
+    /* if (userProfile.user.vcard?.workfax) {
       vCard.addPhone(userProfile.user.vcard?.workfax, "work,fax");
+    } */
+
+    if (userProfile.user.nickname) {
+      vCard.addNick(
+        userProfile.user.vcard?.nickname
+          ? userProfile.user.vcard.nickname
+          : userProfile.user.nickname
+      );
+    } else {
+      if (userProfile.user.vcard?.nickname) {
+        vCard.addNick(userProfile.user.vcard.nickname);
+      }
     }
-    if (userProfile.user.vcard?.nickname) {
+    /* if (userProfile.user.vcard?.nickname) {
       vCard.addNick(userProfile.user.vcard?.nickname);
-    }
+    } */
+
     /* if (userProfile.user.role) {
       vCard.addRole(userProfile.user.role)
     } */
 
-    if (userProfile.user.vcard?.workurl) {
+    if (userProfile.user.workurl) {
+      vCard.addUrl(
+        userProfile.user.vcard?.workurl
+          ? userProfile.user.vcard.workurl
+          : userProfile.user.workurl,
+        "work"
+      );
+    } else {
+      if (userProfile.user.vcard?.workurl) {
+        vCard.addUrl(userProfile.user.vcard.workurl, "work");
+      }
+    }
+    /* if (userProfile.user.vcard?.workurl) {
       vCard.addUrl(userProfile.user.vcard?.workurl, "work");
-    }
+    } */
 
-    if (userProfile.user.vcard?.workaddress) {
-      vCard.addAddress(userProfile.user.vcard?.workaddress, "work");
+    if (userProfile.user.workaddress) {
+      vCard.addAddress(
+        userProfile.user.vcard?.workaddress
+          ? userProfile.user.vcard.workaddress
+          : userProfile.user.workaddress,
+        "work"
+      );
+    } else {
+      if (userProfile.user.vcard?.workaddress) {
+        vCard.addAddress(userProfile.user.vcard.workaddress, "work");
+      }
     }
+    /* if (userProfile.user.vcard?.workaddress) {
+      vCard.addAddress(userProfile.user.vcard?.workaddress, "work");
+    } */
 
     vCard.addUrl(window.location.href, "itap");
 

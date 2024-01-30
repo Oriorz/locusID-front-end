@@ -3,6 +3,9 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        display: ["RubikDirt"],
+      },
       keyframes: {
         wiggle: {
           /* "0%, 100%": { transform: "rotate(-3deg)" }, */
@@ -43,7 +46,7 @@ module.exports = {
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
-        rubikdirt:["Rubik Dirt", "sans-serif"]
+        rubikdirt: ["Rubik Dirt", "sans-serif"],
       },
       ringOffsetColor: {
         //boxShadowColor: {

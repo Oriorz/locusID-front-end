@@ -47,7 +47,7 @@ export const ProfileNotes = ({ userProfile, token, setProfile }) => {
       {userProfile.user.notes ? (
         <>
           <div className="font-poppins whitespace-pre-wrap border-none text-center text-skin-base grid grid-rows-1">
-            <div className="text-xl">
+            <div className=" text-base">
               {userProfile.user.notes}
               {token && (
                 <i
