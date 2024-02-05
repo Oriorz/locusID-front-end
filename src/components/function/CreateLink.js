@@ -11,7 +11,7 @@ export const CreateLink = ({ userProfile, token }) => {
       return;
     }
     //sanitize link : remove "https://" and lowercase it
-    const httpsLink = link.toLowerCase();
+    const httpsLink = link;
     const cleanLink = httpsLink.replace(/^https?:\/\//, "");
     fetch(`/api/createlink`, {
       method: "POST",
@@ -92,7 +92,7 @@ export const CreateLink = ({ userProfile, token }) => {
     console.log("link", link);
     console.log("title", title);
     //sanitize link : remove "https://" and lowercase it
-    const httpsLink = link.toLowerCase();
+    const httpsLink = link;
     const cleanLink = httpsLink.replace(/^https?:\/\//, "");
     fetch(`/api/editlink`, {
       method: "PUT",

@@ -21,11 +21,15 @@ const ResetPassword = () => {
         "Content-type": "application/json",
       },
       body: JSON.stringify({
-        email,
+        email: email.toLowerCase(),
       }),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        console.log("res", res);
+        res.json();
+      })
       .then((data) => {
+        console.log("data: ", data);
         if (data.error) {
           M.toast({ html: data.error, classes: "red darken-3" });
         } else {

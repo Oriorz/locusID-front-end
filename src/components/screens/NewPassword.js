@@ -36,7 +36,7 @@ const NewPassword = () => {
   return (
     <div className="mycard">
       <div className="card auth-card input-field">
-        <h2>iTap</h2>
+        <h2 className="font-poppins text-2xl mb-3">Change Your Password</h2>
         <input
           type="password"
           placeholder="enter a new password"
@@ -49,7 +49,7 @@ const NewPassword = () => {
         >
           Change Password
         </button>
-        <h5>
+        <h5 className="my-4">
           <Link to="/signup">Don't have an account?</Link>
         </h5>
       </div>
