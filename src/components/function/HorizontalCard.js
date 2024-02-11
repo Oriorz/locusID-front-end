@@ -30,8 +30,8 @@ const HorizontalCard = ({ userProfile, token }) => {
       .then((result) => {
         setProfile(result);
         console.log("createembed result is ", result);
+        window.location.reload();
       });
-    window.location.reload();
   };
 
   const handleDelete = async (_id) => {

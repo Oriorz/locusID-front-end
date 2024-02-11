@@ -30,8 +30,8 @@ export const CreateLink = ({ userProfile, token }) => {
       .then((result) => {
         setProfile(result);
         console.log("createlink result is ", result);
+        window.location.reload();
       });
-    window.location.reload();
   };
 
   const handleDelete = async (_id) => {
