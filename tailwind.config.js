@@ -39,6 +39,9 @@ module.exports = {
           fill: "var(--color-button-fill)",
         },
       },
+      backgroundImage: {
+        "gradient-lb": "linear-gradient(var(--tw-gradient-stops))",
+      },
       borderColor: {
         skin: {
           base: "var(--color-line-base)",

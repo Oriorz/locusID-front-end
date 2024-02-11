@@ -12,8 +12,8 @@ const HorizontalCard = ({ userProfile, token }) => {
       return;
     }
     //sanitize link : remove "https://" and lowercase it
-    //const httpsLink = link.toLowerCase();
-    const cleanLink = link.replace(/^https?:\/\//, "");
+    const httpsLink = link;
+    const cleanLink = httpsLink.replace(/^https?:\/\//, "");
     fetch(`/api/createembed`, {
       method: "POST",
       headers: {

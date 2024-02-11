@@ -188,7 +188,7 @@ const UserProfile = () => {
                           </i>
                         )}
                       </h1>
-                      <p className="font-poppins text-lg text-skin-base mb-3">
+                      <p className="font-poppins text-lg text-skin-base ">
                         {userProfile.user.organization
                           ? userProfile.user.organization
                           : "Your Organization"}
@@ -200,7 +200,9 @@ const UserProfile = () => {
                             edit
                           </i>
                         )}
-                        <strong> | </strong>{" "}
+                        {/*  <strong> | </strong>{" "} */}
+                      </p>
+                      <p className="font-poppins text-lg text-skin-base mb-3">
                         {userProfile.user.title
                           ? userProfile.user.title
                           : "Your Title"}{" "}

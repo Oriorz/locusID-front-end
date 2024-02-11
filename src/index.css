@@ -13,19 +13,13 @@
         --color-line-base: #000000;
     }
     .theme-green {
-        /* --color-text-base: #ffffff; */
-        /* --color-fill: #354f31 ;
-        --color-button-fill: #d6ecf3; */
-        /* --color-fill: #00552e ;
-        --color-button-fill: #fddea5; */
-        /* --color-text-base: #e9f4c2; */
         --color-text-base: #AD894F;
-        /* --color-text-button: #121212; */
         --color-text-button: #84693d;
         --color-fill: #00552e ;
-        /* --color-button-fill: #e8d3c7; */
         --color-button-fill: #BAC192;
         --color-line-base: #ffffff;
+        --color-fill-trans: linear-gradient(180deg, #eab308 40%, #a855f7 60%, #3b82f6);
+        --tw-gradient-stops: linear-gradient(180deg, #eab308 40%, #a855f7 60%, #3b82f6);
     }
     .theme-black {
         --color-text-base: #FFD700 ;

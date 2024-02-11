@@ -405,6 +405,8 @@ function GetVCard({ userProfile }) {
           file_download
         </i>
       </button>
+
+      <div className="text-button-base select-none">save</div>
     </>
   );
 }
