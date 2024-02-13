@@ -68,10 +68,10 @@ function ContactForm() {
 
   return (
     <>
-      <div className="form-container row flex-col sm:w-[480px]">
+      <div className="form-container w-5/6 sm:w-5/6 md:w-4/6 lg:w-4/6 xl:w-4/6 p-1">
         <form
           //className="bg-blue-200 border-4 border-red-300 rounded-3xl mx-3 p-4 lg:max-w-lg"
-          className="bg-blue-200 bg-opacity-40 border-4  drop-shadow-md rounded-3xl mx-3 p-4 relative"
+          className="bg-blue-200 bg-opacity-40 border-2  drop-shadow-md rounded-3xl mx-auto p-2 relative"
           onSubmit={handleSubmit}
         >
           <label htmlFor="enquiry-type">Enquiry type</label>

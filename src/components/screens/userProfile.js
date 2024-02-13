@@ -175,7 +175,7 @@ const UserProfile = () => {
                 <div className="flex flex-col items-center justify-center -z-10 my-5 mx-auto w-11/12 border-b-2 border-skin-base pb-4">
                   {userProfile && (
                     <>
-                      <h1 className="font-poppins text-3xl text-skin-base">
+                      <h1 className="font-poppins text-3xl text-skin-base ">
                         {userProfile.user.name
                           ? userProfile.user.name
                           : "Your Name"}{" "}
@@ -188,21 +188,7 @@ const UserProfile = () => {
                           </i>
                         )}
                       </h1>
-                      <p className="font-poppins text-lg text-skin-base ">
-                        {userProfile.user.organization
-                          ? userProfile.user.organization
-                          : "Your Organization"}
-                        {token && (
-                          <i
-                            className="material-icons modal-trigger ml-2 mr-1 mb-0 bg-skin-fill border-skin-base border-solid border-2 select-none"
-                            href={"#modal" + "editOrg"}
-                          >
-                            edit
-                          </i>
-                        )}
-                        {/*  <strong> | </strong>{" "} */}
-                      </p>
-                      <p className="font-poppins text-lg text-skin-base mb-3">
+                      <p className="font-poppins text-lg text-skin-base text-center">
                         {userProfile.user.title
                           ? userProfile.user.title
                           : "Your Title"}{" "}
@@ -210,6 +196,19 @@ const UserProfile = () => {
                           <i
                             className="material-icons modal-trigger ml-2 mr-1 mb-0 bg-skin-fill border-skin-base border-solid border-2 select-none"
                             href={"#modal" + "editTitle"}
+                          >
+                            edit
+                          </i>
+                        )}
+                      </p>
+                      <p className="font-poppins sm:text-md italic md:text-lg text-skin-base mb-3 text-center">
+                        {userProfile.user.organization
+                          ? userProfile.user.organization
+                          : "Your Organization"}
+                        {token && (
+                          <i
+                            className="material-icons modal-trigger ml-2 mr-1 mb-0 bg-skin-fill border-skin-base border-solid border-2 select-none"
+                            href={"#modal" + "editOrg"}
                           >
                             edit
                           </i>
